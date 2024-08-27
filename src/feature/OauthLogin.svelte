@@ -1,5 +1,14 @@
 <script>
   import "../app.css"; // Ensure your app.css includes the Tailwind base styles
+  import { redirect } from "@sveltejs/kit";
+  import { get } from "../lib/module/FetchModule";
+
+  function kakaoOnClick() {
+    get("open/kakao/loginUrl").then((res) => {
+      alert(res.loginUrl);
+      window.location.href = res.loginUrl;
+    });
+  }
 </script>
 
 <div class="oauth-buttons flex flex-col space-y-2 w-full">
@@ -20,6 +29,7 @@
   <!-- Kakao Button -->
   <button
     class="flex items-center justify-center w-full p-2 bg-yellow-400 font-bold text-gray-800 rounded hover:bg-yellow-500"
+    on:click={kakaoOnClick}
   >
     <span>카카오로 로그인</span>
   </button>

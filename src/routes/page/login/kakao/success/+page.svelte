@@ -1,23 +1,23 @@
-<script>
+<script lang="ts">
+  import "../../../../../app.css"; // Ensure your app.css includes the Tailwind base styles
   import { page } from "$app/stores";
 
   // Define reactive variables for query parameters
-  export let code = "";
-  export let error = "";
-  export let errorDescription = "";
-  export let state = "";
+  let code: any = null;
+  let error: any = null;
+  let errorDescription: any = null;
+  let state: any = null;
   // Reactive statement to update variables when the URL changes
   $: {
     const searchParams = $page.url.searchParams;
-    code = searchParams.get("code") ?? ""; // Get the 'code' parameter
-    error = searchParams.get("error") ?? ""; // Get the 'error' parameter
-    errorDescription = searchParams.get("error_description") ?? ""; // Get the 'error_description' parameter
-    state = searchParams.get("state") ?? ""; // Get the 'state' parameter
+    code = searchParams.get("code") ?? null; // Get the 'code' parameter
+    error = searchParams.get("error") ?? null; // Get the 'error' parameter
+    errorDescription = searchParams.get("error_description") ?? null; // Get the 'error_description' parameter
+    state = searchParams.get("state") ?? null; // Get the 'state' parameter
   }
-
-  // Optionally handle the parameters for application logic
-  $: if (error) {
-    console.error(`Error: ${error}, Description: ${errorDescription}`);
+  $: if (state !== "kakaoLogin") {
+    error = "state 미일치";
+    errorDescription = "전송 상태값 미일치";
   }
 </script>
 
@@ -28,9 +28,18 @@
 <section
   class="flex flex-col items-center justify-center p-8 max-w-md h-screen mx-auto text-center"
 >
-  <h1 class="text-6xl font-bold mb-6">kakao 로그인 성공</h1>
-  <div>code : {code}</div>
-  <div>error : {error}</div>
-  <div>errorDescription : {errorDescription}</div>
-  <div>state : {state}</div>
+  {#if error !== null}
+    <h1 class="text-4xl font-bold mb-6">로그인 실패!</h1>
+    <div>: {errorDescription}</div>
+    <button
+      class="flex items-center justify-center w-full p-2 bg-gray-400 font-bold text-gray-800 rounded hover:bg-gray-500 hover:text-gray-100"
+      on:click={() => {
+        window.location.href = "/page/login";
+      }}
+    >
+      <span>로그인으로 이동</span>
+    </button>
+  {:else if code !== null}
+    <h1 class="text-4xl font-bold mb-6">로그인 성공!</h1>
+  {/if}
 </section>

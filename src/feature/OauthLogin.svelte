@@ -4,8 +4,11 @@
   import { get } from "../lib/module/FetchModule";
 
   function kakaoOnClick() {
-    get("open/kakao/loginUrl").then((res) => {
-      alert(res.loginUrl);
+    get("open/kakao/loginUrl", {
+      query: {
+        state: "kakaoLogin",
+      },
+    }).then((res) => {
       window.location.href = res.loginUrl;
     });
   }

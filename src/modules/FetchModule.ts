@@ -1,9 +1,11 @@
-import { config } from "../../app.config";
+import { config } from "../app.config";
+import { CookieModule } from "./CookieModule";
 
 interface RequestOptions {
   query?: Record<string, any>; // Object representing query string parameters
   body?: Record<string, any>; // Object representing the request body
   headers?: Record<string, string>; // Object representing additional headers
+  contentType?: string; // Content-Type option
 }
 
 function buildQueryString(query: Record<string, any>): string {
@@ -20,6 +22,11 @@ function mergeHeaders(
   };
 }
 
+function getAuthorizationHeader(): HeadersInit {
+  const jwtToken = CookieModule.getCookie("jwtToken");
+  return jwtToken ? { Authorization: `Bearer ${jwtToken}` } : {};
+}
+
 export function get(path: string, options: RequestOptions = {}) {
   const url = new URL(`${config.apiUrl}/${path}`);
 
@@ -27,7 +34,13 @@ export function get(path: string, options: RequestOptions = {}) {
     url.search = buildQueryString(options.query);
   }
 
-  const headers = mergeHeaders({}, options.headers);
+  const headers = mergeHeaders(
+    {
+      "Content-Type": options.contentType || "application/json",
+      ...getAuthorizationHeader(),
+    },
+    options.headers,
+  );
 
   return fetch(url.toString(), {
     method: "GET",
@@ -44,7 +57,8 @@ export function post(path: string, options: RequestOptions = {}) {
 
   const headers = mergeHeaders(
     {
-      "Content-Type": "application/json",
+      "Content-Type": options.contentType || "application/json",
+      ...getAuthorizationHeader(),
     },
     options.headers,
   );
@@ -65,7 +79,8 @@ export function put(path: string, options: RequestOptions = {}) {
 
   const headers = mergeHeaders(
     {
-      "Content-Type": "application/json",
+      "Content-Type": options.contentType || "application/json",
+      ...getAuthorizationHeader(),
     },
     options.headers,
   );
@@ -86,7 +101,8 @@ export function del(path: string, options: RequestOptions = {}) {
 
   const headers = mergeHeaders(
     {
-      "Content-Type": "application/json",
+      "Content-Type": options.contentType || "application/json",
+      ...getAuthorizationHeader(),
     },
     options.headers,
   );

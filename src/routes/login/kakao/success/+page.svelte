@@ -1,7 +1,12 @@
 <script lang="ts">
-  import "../../../../../app.css"; // Ensure your app.css includes the Tailwind base styles
+  import "../../../../app.css"; // Ensure your app.css includes the Tailwind base styles
   import { page } from "$app/stores";
-
+  import { browser } from "$app/environment";
+  import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
+  import { CookieModule } from "../../../../modules/CookieModule";
+  import { tryLoginWithCode } from "./tryLoginWithCode";
+  import type { JwtTokenInfo } from "../../../../types/JwtTokenInfo";
   // Define reactive variables for query parameters
   let code: any = null;
   let error: any = null;
@@ -11,7 +16,7 @@
   $: {
     const searchParams = $page.url.searchParams;
     code = searchParams.get("code") ?? null; // Get the 'code' parameter
-    error = searchParams.get("error") ?? null; // Get the 'error' parameter
+    error = searchParams.get("erorr") ?? null; // Get the 'error' parameter
     errorDescription = searchParams.get("error_description") ?? null; // Get the 'error_description' parameter
     state = searchParams.get("state") ?? null; // Get the 'state' parameter
   }
@@ -19,6 +24,18 @@
     error = "state 미일치";
     errorDescription = "전송 상태값 미일치";
   }
+
+  onMount(() => {
+    if (error === null && browser && code) {
+      console.log(code);
+      // tryLoginWithCode(code).then((tokenInfo: JwtTokenInfo | null) => {
+      //   // Store the code in a cookie
+      //   CookieModule.setCookie("jwtToken", tokenInfo?.jwtToken ?? "");
+      //   // Redirect to the main page with the code parameter
+      //   goto(`/app/main`);
+      // });
+    }
+  });
 </script>
 
 <svelte:head>
@@ -40,6 +57,6 @@
       <span>로그인으로 이동</span>
     </button>
   {:else if code !== null}
-    <h1 class="text-4xl font-bold mb-6">로그인 성공!</h1>
+    <div></div>
   {/if}
 </section>

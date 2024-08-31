@@ -1,0 +1,54 @@
+<script lang="ts">
+  import { onMount } from "svelte";
+  import YearMonth from "./components/YearMonth.svelte";
+  import DayElement from "./components/DayElement.svelte";
+  import { CalendarDateValue, CalendarDate } from "../../stores/CalendarStore";
+  import { previousMonth } from "../../widgets/previousMonth";
+  import { nextMonth } from "../../widgets/nextMonth";
+
+  let currentDate: Date;
+  let currentMonth: number;
+  let currentYear: number;
+  let daysInMonth: number;
+  let firstDayOfMonth: number;
+
+  onMount(() => {
+    const unsubscribe = CalendarDateValue.subscribe((date: CalendarDate) => {
+      currentDate = new Date(date.year, date.month, date.date);
+      currentMonth = currentDate.getMonth();
+      currentYear = currentDate.getFullYear();
+      daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+    });
+
+    return unsubscribe;
+  });
+
+  $: calendarDays = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+  $: monthName = currentDate?.toLocaleString("default", { month: "long" });
+</script>
+
+<div class="flex flex-col w-full h-full flex-1">
+  <div class="flex justify-between items-center mb-4">
+    <button class="px-2 py-1 bg-gray-200 rounded" on:click={previousMonth}
+      >&lt;</button
+    >
+    <YearMonth />
+    <button class="px-2 py-1 bg-gray-200 rounded" on:click={nextMonth}
+      >&gt;</button
+    >
+  </div>
+  <div class="grid grid-cols-weekdays gap-1 bg-gray-300">
+    {#each ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as weekday}
+      <div class="text-center font-bold p-1">{weekday}</div>
+    {/each}
+  </div>
+  <div class="grid grid-cols-7 gap-1 flex-1">
+    {#each Array(firstDayOfMonth).fill(null) as _}
+      <div class="text-center p-1"></div>
+    {/each}
+    {#each calendarDays as day}
+      <DayElement {day} />
+    {/each}
+  </div>
+</div>

@@ -1,6 +1,6 @@
 <script>
-  import "../../../app.css"; // Ensure your app.css includes the Tailwind base styles
-  import OauthLogin from "../../../feature/OauthLogin.svelte";
+  import "../../app.css"; // Ensure your app.css includes the Tailwind base styles
+  import OauthLogin from "./OauthLogin.svelte";
 </script>
 
 <svelte:head>

@@ -1,17 +1,6 @@
 <script>
-  import "../app.css"; // Ensure your app.css includes the Tailwind base styles
-  import { redirect } from "@sveltejs/kit";
-  import { get } from "../lib/module/FetchModule";
-
-  function kakaoOnClick() {
-    get("open/kakao/loginUrl", {
-      query: {
-        state: "kakaoLogin",
-      },
-    }).then((res) => {
-      window.location.href = res.loginUrl;
-    });
-  }
+  import "../../app.css"; // Ensure your app.css includes the Tailwind base styles
+  import { kakaoOnClick } from "./kakaoOnClick";
 </script>
 
 <div class="oauth-buttons flex flex-col space-y-2 w-full">

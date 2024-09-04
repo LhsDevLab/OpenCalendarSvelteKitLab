@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { ScreenInfoValue } from "../../stores/ScreenStore";
+  import { ScreenInfoValue } from "$lib/stores/ScreenInfoStore";
 
   let isLandscape: boolean;
   let isSmallWidth: boolean;

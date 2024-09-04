@@ -1,5 +1,5 @@
 <script>
-  import "../../app.css"; // Ensure your app.css includes the Tailwind base styles
+  import "$lib/app.css"; // Ensure your app.css includes the Tailwind base styles
   import { kakaoOnClick } from "./kakaoOnClick";
 </script>
 

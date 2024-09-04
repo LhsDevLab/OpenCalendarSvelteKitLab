@@ -1,7 +1,7 @@
 <script lang="ts">
-  import "../../../app.css"; // Ensure your app.css includes the Tailwind base styles
-  import Calendar from "../../../widgets/Calendar/Calendar.svelte";
-  import { ScreenInfoValue } from "../../../stores/ScreenStore";
+  import "$lib/app.css"; // Ensure your app.css includes the Tailwind base styles
+  import MainCalendar from "$lib/widgets/MainCalendar/MainCalendar.svelte";
+  import { ScreenInfoValue } from "$lib/stores/ScreenInfoStore";
 
   let isLandscape: boolean;
 
@@ -20,7 +20,7 @@
   class:flex-col={!isLandscape}
 >
   <div class="flex flex-col w-full h-full flex-1">
-    <Calendar />
+    <MainCalendar />
   </div>
   <div class="flex flex-col w-full h-full flex-1">
     <test>test </test>

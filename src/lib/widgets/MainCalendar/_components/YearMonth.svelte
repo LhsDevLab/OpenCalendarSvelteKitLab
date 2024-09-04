@@ -1,9 +1,9 @@
 <script lang="ts">
   import {
-    CalendarDateValue,
-    CalendarDate,
-  } from "../../../stores/CalendarStore";
-  import { ScreenInfoValue } from "../../../stores/ScreenStore";
+    MainCalendarDateValue,
+    MainCalendarDate,
+  } from "$lib/stores/MainCalendarStore";
+  import { ScreenInfoValue } from "$lib/stores/ScreenInfoStore";
 
   let isSmallHeight: boolean;
 
@@ -15,7 +15,7 @@
   let month: number;
   let weekday: number;
 
-  CalendarDateValue.subscribe((date: CalendarDate) => {
+  MainCalendarDateValue.subscribe((date: MainCalendarDate) => {
     year = date.year;
     month = date.month;
     weekday = date.weekday;

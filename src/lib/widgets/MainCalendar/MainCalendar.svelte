@@ -1,10 +1,13 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import YearMonth from "./components/YearMonth.svelte";
-  import DayElement from "./components/DayElement.svelte";
-  import { CalendarDateValue, CalendarDate } from "../../stores/CalendarStore";
-  import { previousMonth } from "../../widgets/previousMonth";
-  import { nextMonth } from "../../widgets/nextMonth";
+  import YearMonth from "./_components/YearMonth.svelte";
+  import DayElement from "./_components/DayElement.svelte";
+  import {
+    MainCalendarDateValue,
+    MainCalendarDate,
+  } from "$lib/stores/MainCalendarStore";
+  import { previousMonth } from "./_methods/previousMonth";
+  import { nextMonth } from "./_methods/nextMonth";
 
   let currentDate: Date;
   let currentMonth: number;
@@ -13,13 +16,15 @@
   let firstDayOfMonth: number;
 
   onMount(() => {
-    const unsubscribe = CalendarDateValue.subscribe((date: CalendarDate) => {
-      currentDate = new Date(date.year, date.month, date.date);
-      currentMonth = currentDate.getMonth();
-      currentYear = currentDate.getFullYear();
-      daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-      firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
-    });
+    const unsubscribe = MainCalendarDateValue.subscribe(
+      (date: MainCalendarDate) => {
+        currentDate = new Date(date.year, date.month, date.date);
+        currentMonth = currentDate.getMonth();
+        currentYear = currentDate.getFullYear();
+        daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+        firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+      },
+    );
 
     return unsubscribe;
   });

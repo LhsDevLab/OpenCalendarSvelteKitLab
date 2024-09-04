@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { ScreenInfoValue } from "../../stores/ScreenStore";
+  import { ScreenInfoValue } from "$lib/stores/ScreenInfoStore";
   import ModuCalLogo from "./ModuCalLogo.svelte";
 
   let isLandscape: boolean;

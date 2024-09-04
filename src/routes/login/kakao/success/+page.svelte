@@ -1,12 +1,12 @@
 <script lang="ts">
-  import "../../../../app.css"; // Ensure your app.css includes the Tailwind base styles
+  import "~/app.css";
   import { page } from "$app/stores";
   import { browser } from "$app/environment";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
-  import { CookieModule } from "../../../../modules/CookieModule";
+  import { CookieUtils } from "$lib/utils/CookieUtils";
   import { tryLoginWithCode } from "./tryLoginWithCode";
-  import type { JwtTokenInfo } from "../../../../types/JwtTokenInfo";
+  import type { JwtTokenInfo } from "$lib/types/JwtTokenInfo";
   // Define reactive variables for query parameters
   let code: any = null;
   let error: any = null;
@@ -20,26 +20,31 @@
     errorDescription = searchParams.get("error_description") ?? null; // Get the 'error_description' parameter
     state = searchParams.get("state") ?? null; // Get the 'state' parameter
   }
-  $: if (state !== "kakaoLogin") {
+  $: if (!["kakaoLogin", "kakaoSignUp"].includes(state)) {
     error = "state 미일치";
     errorDescription = "전송 상태값 미일치";
   }
 
   onMount(() => {
     if (error === null && browser && code) {
-      console.log(code);
-      // tryLoginWithCode(code).then((tokenInfo: JwtTokenInfo | null) => {
-      //   // Store the code in a cookie
-      //   CookieModule.setCookie("jwtToken", tokenInfo?.jwtToken ?? "");
-      //   // Redirect to the main page with the code parameter
-      //   goto(`/app/main`);
-      // });
+      if ((state = "kakaoLogin")) {
+        tryLoginWithCode(code).then((tokenInfo: JwtTokenInfo | null) => {
+          // Store the code in a cookie
+          CookieUtils.setCookie("jwtToken", tokenInfo?.jwtToken ?? "");
+          let temp = CookieUtils.getCookie("jwtToken");
+          console.log(temp);
+          // Redirect to the main page with the code parameter
+          //goto(`/app/main`);
+        });
+      } else if (state === "kakaoSignUp") {
+        goto("/login/kakao/signup");
+      }
     }
   });
 </script>
 
 <svelte:head>
-  <title>Login</title>
+  <title>oauth success</title>
 </svelte:head>
 
 <section

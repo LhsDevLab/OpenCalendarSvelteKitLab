@@ -1,7 +1,7 @@
 import { browser } from "$app/environment";
-import { config } from "../app.config";
+import { config } from "$lib/app.config";
 
-export class CookieModule {
+export class CookieUtils {
   static setCookie(
     name: string,
     value: string,

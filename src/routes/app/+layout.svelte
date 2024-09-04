@@ -1,10 +1,10 @@
 <script lang="ts">
-  import Footer from "./Footer.svelte";
-  import Menubar from "./Menubar.svelte";
-  import "../../app.css";
+  import Footer from "./_components/Footer.svelte";
+  import Menubar from "./_components/Menubar.svelte";
+  import "$lib/app.css";
   import { onMount } from "svelte";
-  import { ScreenInfoValue } from "../../stores/ScreenStore";
-  import { config } from "../../app.config";
+  import { ScreenInfoValue } from "$lib/stores/ScreenInfoStore";
+  import { config } from "$lib/app.config";
 
   let isLandscape: boolean;
 

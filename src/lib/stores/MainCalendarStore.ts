@@ -1,6 +1,6 @@
 import { writable, type Writable } from "svelte/store";
 
-export class CalendarDate {
+export class MainCalendarDate {
   constructor(date: Date) {
     this.year = date.getFullYear();
     this.month = date.getMonth();
@@ -13,6 +13,5 @@ export class CalendarDate {
   weekday: number;
 }
 
-export const CalendarDateValue: Writable<CalendarDate> = writable<CalendarDate>(
-  new CalendarDate(new Date()),
-);
+export const MainCalendarDateValue: Writable<MainCalendarDate> =
+  writable<MainCalendarDate>(new MainCalendarDate(new Date()));

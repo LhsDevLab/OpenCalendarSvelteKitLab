@@ -12,35 +12,44 @@ function buildQueryString(query: Record<string, any>): string {
   return new URLSearchParams(query).toString();
 }
 
-function mergeHeaders(
-  defaultHeaders: HeadersInit,
-  customHeaders?: Record<string, string>,
-): HeadersInit {
-  return {
-    ...defaultHeaders,
-    ...customHeaders,
-  };
-}
-
 function getAuthorizationHeader(): HeadersInit {
   const jwtToken = CookieUtils.getCookie("jwtToken");
   return jwtToken ? { Authorization: `Bearer ${jwtToken}` } : {};
 }
 
-async function handleResponse(response: Response) {
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(
-      errorData.message || `HTTP error! status: ${response.status}`,
-    );
-  }
-  return response.json();
-}
+export async function fetchWithErrorHandling(
+  method: "GET" | "POST" | "PUT" | "DELETE",
+  path: string,
+  options: RequestOptions = {},
+) {
+  const url = new URL(`${config.apiUrl}/${path}`);
 
-async function fetchWithErrorHandling(url: string, options: RequestInit) {
+  if (options.query) {
+    url.search = buildQueryString(options.query);
+  }
+
+  const headers = {
+    "Content-Type": options.contentType || "application/json",
+    ...getAuthorizationHeader(),
+    ...options.headers,
+  };
+
   try {
-    const response = await fetch(url, options);
-    return await handleResponse(response);
+    const response = await fetch(url.toString(), {
+      method: method,
+      headers: headers,
+      ...(method !== "GET" && method !== "DELETE"
+        ? { body: JSON.stringify(options.body || {}) }
+        : {}),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(
+        errorData.message || `HTTP error! status: ${response.status}`,
+      );
+    }
+    return response.json();
   } catch (error) {
     console.error("Fetch error:", error);
     throw error;
@@ -48,88 +57,17 @@ async function fetchWithErrorHandling(url: string, options: RequestInit) {
 }
 
 export function get(path: string, options: RequestOptions = {}) {
-  const url = new URL(`${config.apiUrl}/${path}`);
-
-  if (options.query) {
-    url.search = buildQueryString(options.query);
-  }
-
-  const headers = mergeHeaders(
-    {
-      "Content-Type": options.contentType || "application/json",
-      ...getAuthorizationHeader(),
-    },
-    options.headers,
-  );
-
-  return fetchWithErrorHandling(url.toString(), {
-    method: "GET",
-    headers: headers,
-  });
+  return fetchWithErrorHandling("GET", path, options);
 }
 
 export function post(path: string, options: RequestOptions = {}) {
-  const url = new URL(`${config.apiUrl}/${path}`);
-
-  if (options.query) {
-    url.search = buildQueryString(options.query);
-  }
-
-  const headers = mergeHeaders(
-    {
-      "Content-Type": options.contentType || "application/json",
-      ...getAuthorizationHeader(),
-    },
-    options.headers,
-  );
-
-  return fetchWithErrorHandling(url.toString(), {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify(options.body || {}),
-  });
+  return fetchWithErrorHandling("POST", path, options);
 }
 
 export function put(path: string, options: RequestOptions = {}) {
-  const url = new URL(`${config.apiUrl}/${path}`);
-
-  if (options.query) {
-    url.search = buildQueryString(options.query);
-  }
-
-  const headers = mergeHeaders(
-    {
-      "Content-Type": options.contentType || "application/json",
-      ...getAuthorizationHeader(),
-    },
-    options.headers,
-  );
-
-  return fetchWithErrorHandling(url.toString(), {
-    method: "PUT",
-    headers: headers,
-    body: JSON.stringify(options.body || {}),
-  });
+  return fetchWithErrorHandling("PUT", path, options);
 }
 
 export function del(path: string, options: RequestOptions = {}) {
-  const url = new URL(`${config.apiUrl}/${path}`);
-
-  if (options.query) {
-    url.search = buildQueryString(options.query);
-  }
-
-  const headers = mergeHeaders(
-    {
-      "Content-Type": options.contentType || "application/json",
-      ...getAuthorizationHeader(),
-    },
-    options.headers,
-  );
-
-  return fetchWithErrorHandling(url.toString(), {
-    method: "DELETE",
-    headers: headers,
-    body: JSON.stringify(options.body || {}),
-  });
+  return fetchWithErrorHandling("DELETE", path, options);
 }

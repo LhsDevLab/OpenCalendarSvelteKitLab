@@ -6,7 +6,7 @@ export async function tryLoginWithCode(
 ): Promise<JwtTokenInfo | null> {
   let jwtToken = null;
   try {
-    jwtToken = await await post("open/kakao/tryLoginWithCode", {
+    jwtToken = await await post("open/kakao/tryLogin", {
       body: { code },
     }).then((response) => {
       let jwtToken = response.jwtToken;

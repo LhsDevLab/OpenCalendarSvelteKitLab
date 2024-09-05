@@ -1,29 +1,20 @@
 <script lang="ts">
-  import "~/app.css";
-  import { page } from "$app/stores";
+  import "$lib/app.css";
   import { browser } from "$app/environment";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { CookieUtils } from "$lib/utils/CookieUtils";
   import { tryLoginWithCode } from "./tryLoginWithCode";
   import type { JwtTokenInfo } from "$lib/types/JwtTokenInfo";
-  // Define reactive variables for query parameters
-  let code: any = null;
-  let error: any = null;
-  let errorDescription: any = null;
-  let state: any = null;
-  // Reactive statement to update variables when the URL changes
-  $: {
-    const searchParams = $page.url.searchParams;
-    code = searchParams.get("code") ?? null; // Get the 'code' parameter
-    error = searchParams.get("erorr") ?? null; // Get the 'error' parameter
-    errorDescription = searchParams.get("error_description") ?? null; // Get the 'error_description' parameter
-    state = searchParams.get("state") ?? null; // Get the 'state' parameter
-  }
-  $: if (!["kakaoLogin", "kakaoSignUp"].includes(state)) {
-    error = "state 미일치";
-    errorDescription = "전송 상태값 미일치";
-  }
+
+  export let data: {
+    code: string;
+    error: string;
+    errorDescription: string;
+    state: string;
+  };
+
+  let { code, error, errorDescription, state } = data;
 
   onMount(() => {
     if (error === null && browser && code) {

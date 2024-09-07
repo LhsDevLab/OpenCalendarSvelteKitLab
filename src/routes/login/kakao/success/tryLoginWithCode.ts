@@ -1,23 +1,26 @@
 import { post } from "$lib/utils/FetchUtils";
-import { JwtTokenInfo } from "$lib/types/JwtTokenInfo";
+import {
+  type LoginResponseDTOonFailure,
+  type LoginResponseDTOonSuccess,
+} from "$lib/types/DTO/LoginResponseDTO";
 
 export async function tryLoginWithCode(
   code: string,
-): Promise<JwtTokenInfo | null> {
-  let jwtToken = null;
+): Promise<LoginResponseDTOonSuccess | LoginResponseDTOonFailure> {
   try {
-    jwtToken = await await post("open/kakao/tryLogin", {
-      body: { code },
-    }).then((response) => {
-      let jwtToken = response.jwtToken;
-      if (jwtToken === null) {
-        throw new Error("jwtToken is null");
-      }
-      return new JwtTokenInfo(jwtToken);
-    });
-  } catch (error) {
-    alert(error);
-  } finally {
-    return jwtToken;
+    let res: LoginResponseDTOonSuccess | LoginResponseDTOonFailure = await post(
+      "open/kakao/tryLogin",
+      {
+        body: { code },
+      },
+    );
+
+    return res;
+  } catch (e: any) {
+    return {
+      isSuccess: false,
+      code: "DEFAULT",
+      payload: e.message,
+    };
   }
 }

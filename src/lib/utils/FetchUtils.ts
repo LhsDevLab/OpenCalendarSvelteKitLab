@@ -1,5 +1,4 @@
 import { config } from "$lib/app.config";
-import { CookieUtils } from "$lib/utils/CookieUtils";
 
 interface RequestOptions {
   query?: Record<string, any>;
@@ -10,11 +9,6 @@ interface RequestOptions {
 
 function buildQueryString(query: Record<string, any>): string {
   return new URLSearchParams(query).toString();
-}
-
-function getAuthorizationHeader(): HeadersInit {
-  const jwtToken = CookieUtils.getCookie("jwtToken");
-  return jwtToken ? { Authorization: `Bearer ${jwtToken}` } : {};
 }
 
 export async function fetchWithErrorHandling(
@@ -30,7 +24,6 @@ export async function fetchWithErrorHandling(
 
   const headers = {
     "Content-Type": options.contentType || "application/json",
-    ...getAuthorizationHeader(),
     ...options.headers,
   };
 

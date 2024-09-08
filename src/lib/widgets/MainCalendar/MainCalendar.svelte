@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import YearMonth from "./_components/YearMonth.svelte";
+  import YearMonth from "$lib/widgets/YearMonth/YearMonth.svelte";
   import DayElement from "./_components/DayElement.svelte";
   import {
     MainCalendarDateValue,
@@ -29,8 +29,10 @@
     return unsubscribe;
   });
 
-  $: calendarDays = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-  $: monthName = currentDate?.toLocaleString("default", { month: "long" });
+  $: calendarDays = Array.from(
+    { length: daysInMonth },
+    (_, i) => new Date(currentYear, currentMonth, i + 1),
+  );
 </script>
 
 <div class="flex flex-col w-full h-full flex-1">
@@ -43,12 +45,12 @@
       >&gt;</button
     >
   </div>
-  <div class="grid grid-cols-weekdays gap-1 bg-gray-300">
+  <div class="grid grid-cols-weekdays gap-1 bg-blue-300 rounded">
     {#each ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as weekday}
       <div class="text-center font-bold p-1">{weekday}</div>
     {/each}
   </div>
-  <div class="grid grid-cols-7 gap-1 flex-1">
+  <div class="grid grid-cols-7 gap-2 flex-1">
     {#each Array(firstDayOfMonth).fill(null) as _}
       <div class="text-center p-1"></div>
     {/each}

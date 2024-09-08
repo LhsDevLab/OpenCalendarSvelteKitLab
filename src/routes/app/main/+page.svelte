@@ -19,10 +19,8 @@
   class:flex-row={isLandscape}
   class:flex-col={!isLandscape}
 >
-  <div class="flex flex-col w-full h-full flex-1">
+  <div class="flex flex-col w-full h-full basis-0 grow shrink">
     <MainCalendar />
   </div>
-  <div class="flex flex-col w-full h-full flex-1">
-    <test>test </test>
-  </div>
+  <div class="flex flex-col w-full h-full flex-1 bg-sky-200"></div>
 </section>

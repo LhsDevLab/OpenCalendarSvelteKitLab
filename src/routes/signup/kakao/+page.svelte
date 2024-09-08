@@ -6,7 +6,7 @@
     SignUpResponseDTOonFailure,
     SignUpResponseDTOonSuccess,
   } from "$lib/types/DTO/SignUpResponseDTO";
-  import { trySignup } from "./trySignup";
+  import { trySignup } from "./_methods/trySignup";
 
   export let data: {
     kakaoId: string;

@@ -4,8 +4,10 @@
     MainCalendarDate,
   } from "$lib/stores/MainCalendarStore";
   import { ScreenInfoValue } from "$lib/stores/ScreenInfoStore";
+  import Selector from "./_component/Selector.svelte";
 
   let isSmallHeight: boolean;
+  let showPopup = false;
 
   ScreenInfoValue.subscribe((value) => {
     isSmallHeight = value.isSmallHeight;
@@ -20,11 +22,16 @@
     month = date.month;
     weekday = date.weekday;
   });
+
+  function togglePopup() {
+    showPopup = !showPopup;
+  }
 </script>
 
 {#if !isSmallHeight}
   <div
-    class="flex flex-col items-center justify-center font-sans bg-gray-100 rounded-lg p-4 shadow-md w-full h-15 mx-2"
+    class="flex flex-col items-center justify-center font-sans bg-gray-100 rounded-lg p-4 shadow-md w-full h-15 mx-2 cursor-pointer"
+    on:click={togglePopup}
   >
     <div class="flex flex-col items-center h-full">
       <span class="text-lg font-bold">
@@ -34,7 +41,8 @@
   </div>
 {:else}
   <div
-    class="flex flex-col items-center justify-center font-sans bg-gray-100 rounded-lg p-4 shadow-md w-full h-10 mx-2"
+    class="flex flex-col items-center justify-center font-sans bg-gray-100 rounded-lg p-4 shadow-md w-full h-10 mx-2 cursor-pointer"
+    on:click={togglePopup}
   >
     <div class="flex flex-col items-center h-full">
       <span class="text-sm font-bold">
@@ -42,4 +50,8 @@
       </span>
     </div>
   </div>
+{/if}
+
+{#if showPopup}
+  <Selector {togglePopup} />
 {/if}

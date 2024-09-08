@@ -1,5 +1,5 @@
 import type { PageServerLoad } from "./$types";
-import { tryLoginWithCode } from "./tryLoginWithCode";
+import { tryLoginWithCode } from "./_methods/tryLoginWithCode";
 import {
   type LoginResponseDTOonFailure,
   type LoginResponseDTOonSuccess,

@@ -22,5 +22,5 @@
   <div class="flex flex-col w-full h-full basis-0 grow shrink">
     <MainCalendar />
   </div>
-  <div class="flex flex-col w-full h-full flex-1 bg-sky-200"></div>
+  <div class="flex flex-col w-full h-full flex-1 bg-orange-100"></div>
 </section>

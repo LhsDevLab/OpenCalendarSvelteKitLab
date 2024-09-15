@@ -6,5 +6,5 @@ export const config = {
     sameSite: "strict",
   },
   smallWidth: 1000,
-  smallHeight: 1000,
+  smallHeight: 800,
 };

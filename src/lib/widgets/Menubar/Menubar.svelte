@@ -1,7 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import { ScreenInfoValue } from "$lib/stores/ScreenInfoStore";
-  import ModuCalLogo from "./ModuCalLogo.svelte";
+  import ModuCalLogo from "./_components/ModuCalLogo.svelte";
+
+  export let selected: string;
 
   let isLandscape: boolean;
   let isSmallWidth: boolean;
@@ -19,10 +21,9 @@
   }
 
   const menuItems = [
-    { name: "Home", icon: "🏠" },
-    { name: "Calendar", icon: "📅" },
-    { name: "Tasks", icon: "✅" },
-    { name: "Settings", icon: "⚙️" },
+    { name: "main", icon: "" },
+    { name: "create", icon: "" },
+    { name: "settings", icon: "" },
   ];
 </script>
 
@@ -37,6 +38,7 @@
           <li class="w-full">
             <button
               class="flex flex-row h-16 items-center justify-start hover:bg-gray-700 rounded p-2 w-full"
+              class:bg-gray-500={selected === item.name}
               on:click={() => handleMenuClick(item.name)}
             >
               <span class="text-2xl">{item.icon}</span>
@@ -54,6 +56,7 @@
           <li class="w-full">
             <button
               class="flex flex-col h-16 items-center justify-start hover:bg-gray-700 rounded py-2 w-full"
+              class:bg-gray-500={selected === item.name}
               on:click={() => handleMenuClick(item.name)}
             >
               <span class="text-2xl">{item.icon}</span>
@@ -71,7 +74,8 @@
       {#each menuItems as item}
         <li class="w-full">
           <button
-            class="flex flex-col items-center justify-center hover:bg-gray-700 rounded px-2 w-full"
+            class="flex flex-col h-16 items-center justify-center hover:bg-gray-700 rounded px-2 w-full"
+            class:bg-gray-500={selected === item.name}
             on:click={() => handleMenuClick(item.name)}
           >
             <span class="text-xl">{item.icon}</span>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import Footer from "./_components/Footer.svelte";
-  import Menubar from "./_components/Menubar.svelte";
+  import Menubar from "$lib/widgets/Menubar/Menubar.svelte";
   import "$lib/app.css";
   import { ScreenInfoValue } from "$lib/stores/ScreenInfoStore";
 
@@ -17,7 +17,7 @@
     class:flex-row={isLandscape}
     class:flex-col={!isLandscape}
   >
-    <Menubar />
+    <Menubar selected="main" />
     <main class="flex flex-col flex-1">
       <slot class="flex-1" />
     </main>

@@ -22,22 +22,48 @@
     month = date.month;
     weekday = date.weekday;
   });
+
+  function handleFocus(event: FocusEvent) {
+    const select = event.target as HTMLSelectElement;
+    select.size = 12;
+  }
+  function handleBlur(event: FocusEvent) {
+    const select = event.target as HTMLSelectElement;
+    select.size = 1;
+  }
+  function handleChange(event: Event) {
+    const select = event.target as HTMLSelectElement;
+    select.blur();
+  }
 </script>
 
 <div
   class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
 >
-  <div class="bg-white p-4 rounded-lg">
-    <h2 class="text-lg font-bold mb-4">Select Year and Month</h2>
-    <div class="flex mb-4">
-      <select bind:value={year} class="mr-2 p-2 border rounded">
-        {#each Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - 5 + i) as yearOption}
-          <option value={yearOption}>{yearOption}</option>
+  <div class="p-4 rounded-lg bg-white w-96">
+    <div class="flex flex-col mb-4">
+      <h2 class="text-lg font-bold mb-4">Year</h2>
+      <select
+        class="mr-2 p-2 border rounded w-full text-center"
+        bind:value={year}
+        on:focus={handleFocus}
+        on:blur={handleBlur}
+        on:change={handleChange}
+      >
+        {#each Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - 50 + i) as yearOption}
+          <option value={yearOption} class="text-center">{yearOption}년</option>
         {/each}
       </select>
-      <select bind:value={month} class="p-2 border rounded">
+      <h2 class="text-lg font-bold mb-4">Month</h2>
+      <select
+        class="p-2 border rounded w-full text-center"
+        bind:value={month}
+        on:focus={handleFocus}
+        on:blur={handleBlur}
+        on:change={handleChange}
+      >
         {#each Array.from({ length: 12 }, (_, i) => i) as monthOption}
-          <option value={monthOption}
+          <option value={monthOption} class="text-center"
             >{new Date(2000, monthOption).toLocaleString("default", {
               month: "long",
             })}</option

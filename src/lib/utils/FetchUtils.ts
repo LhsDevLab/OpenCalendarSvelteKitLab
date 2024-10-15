@@ -11,7 +11,7 @@ function buildQueryString(query: Record<string, any>): string {
   return new URLSearchParams(query).toString();
 }
 
-export async function fetchWithErrorHandling(
+async function fetchWithErrorHandling(
   method: "GET" | "POST" | "PUT" | "DELETE",
   path: string,
   options: RequestOptions = {},
@@ -42,7 +42,7 @@ export async function fetchWithErrorHandling(
         errorData.message || `HTTP error! status: ${response.status}`,
       );
     }
-    return response.json();
+    return response;
   } catch (error) {
     console.error("Fetch error:", error);
     throw error;
@@ -50,17 +50,31 @@ export async function fetchWithErrorHandling(
 }
 
 export function get(path: string, options: RequestOptions = {}) {
-  return fetchWithErrorHandling("GET", path, options);
+  return fetchWithErrorHandling("GET", path, options).then((res) => res.json());
 }
 
 export function post(path: string, options: RequestOptions = {}) {
-  return fetchWithErrorHandling("POST", path, options);
+  return fetchWithErrorHandling("POST", path, options).then((res) =>
+    res.json(),
+  );
 }
 
 export function put(path: string, options: RequestOptions = {}) {
-  return fetchWithErrorHandling("PUT", path, options);
+  return fetchWithErrorHandling("PUT", path, options).then((res) => res.json());
 }
 
 export function del(path: string, options: RequestOptions = {}) {
-  return fetchWithErrorHandling("DELETE", path, options);
+  return fetchWithErrorHandling("DELETE", path, options).then((res) =>
+    res.json(),
+  );
+}
+
+export async function getImage(imageId: string): Promise<Blob> {
+  const url = `app/image/get_image/${imageId}`;
+  const options: RequestOptions = {
+    headers: {
+      Accept: "image/*",
+    },
+  };
+  return fetchWithErrorHandling("GET", url, options).then((res) => res.blob());
 }

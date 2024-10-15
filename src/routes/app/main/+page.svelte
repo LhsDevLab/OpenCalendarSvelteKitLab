@@ -11,7 +11,7 @@
 </script>
 
 <svelte:head>
-  <title>Login</title>
+  <title>Main</title>
 </svelte:head>
 
 <section

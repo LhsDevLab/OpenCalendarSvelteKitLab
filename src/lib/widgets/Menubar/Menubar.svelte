@@ -17,6 +17,7 @@
   const dispatch = createEventDispatcher();
 
   function handleMenuClick(menuItem: string) {
+    selected = menuItem;
     dispatch("menuSelect", menuItem);
   }
 

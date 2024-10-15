@@ -1,4 +1,5 @@
 import { config } from "$lib/app.config";
+import { FetchStore } from "$lib/stores/FetchStore";
 
 interface RequestOptions {
   query?: Record<string, any>;
@@ -24,6 +25,7 @@ async function fetchWithErrorHandling(
 
   const headers = {
     "Content-Type": options.contentType || "application/json",
+    Authorization: "Bearer " + FetchStore.token,
     ...options.headers,
   };
 

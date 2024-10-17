@@ -1,5 +1,12 @@
 import { config } from "$lib/app.config";
-import { FetchStore } from "$lib/stores/FetchStore";
+
+const FetchStore = {
+  token: "",
+};
+
+function setToken(token: string) {
+  FetchStore.token = token;
+}
 
 interface RequestOptions {
   query?: Record<string, any>;
@@ -51,27 +58,27 @@ async function fetchWithErrorHandling(
   }
 }
 
-export function get(path: string, options: RequestOptions = {}) {
+function get(path: string, options: RequestOptions = {}) {
   return fetchWithErrorHandling("GET", path, options).then((res) => res.json());
 }
 
-export function post(path: string, options: RequestOptions = {}) {
+function post(path: string, options: RequestOptions = {}) {
   return fetchWithErrorHandling("POST", path, options).then((res) =>
     res.json(),
   );
 }
 
-export function put(path: string, options: RequestOptions = {}) {
+function put(path: string, options: RequestOptions = {}) {
   return fetchWithErrorHandling("PUT", path, options).then((res) => res.json());
 }
 
-export function del(path: string, options: RequestOptions = {}) {
+function del(path: string, options: RequestOptions = {}) {
   return fetchWithErrorHandling("DELETE", path, options).then((res) =>
     res.json(),
   );
 }
 
-export async function getImage(imageId: string): Promise<Blob> {
+async function getImage(imageId: string): Promise<Blob> {
   const url = `app/image/get_image/${imageId}`;
   const options: RequestOptions = {
     headers: {
@@ -80,3 +87,5 @@ export async function getImage(imageId: string): Promise<Blob> {
   };
   return fetchWithErrorHandling("GET", url, options).then((res) => res.blob());
 }
+
+export { get, post, put, del, getImage, setToken };

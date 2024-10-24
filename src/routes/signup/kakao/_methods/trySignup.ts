@@ -2,7 +2,7 @@ import { post } from "$lib/utils/FetchUtils";
 import {
   type SignUpResponseDTOonFailure,
   type SignUpResponseDTOonSuccess,
-} from "$lib/types/DTO/SignUpResponseDTO";
+} from "$lib/types/apiDTO/SignUpResponseDTO";
 
 export async function trySignup(
   kakaoId: string,

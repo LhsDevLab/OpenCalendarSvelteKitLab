@@ -5,7 +5,7 @@
   import type {
     SignUpResponseDTOonFailure,
     SignUpResponseDTOonSuccess,
-  } from "$lib/types/DTO/SignUpResponseDTO";
+  } from "$lib/types/apiDTO/SignUpResponseDTO";
   import { trySignup } from "./_methods/trySignup";
 
   export let data: {

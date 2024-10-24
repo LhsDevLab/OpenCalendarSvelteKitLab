@@ -1,9 +1,6 @@
-import type { PageServerLoad } from "./$types";
-
-export const load: PageServerLoad = async ({ cookies }) => {
-  // Access cookies
-  let kakaoId = cookies.get("kakaoId");
-
+/** @type {import('./$types').PageServerLoad} */
+export const load = async ({ url, params, cookies }) => {
+  let { kakaoId } = params as any;
   return {
     kakaoId,
   };

@@ -1,11 +1,30 @@
 import { config } from "$lib/app.config";
+import type { JwtDto } from "$lib/types/JwtDto";
+import { getCookie, setCookie } from "$lib/utils/CookieUtils";
+import type {
+  RefreshJwtResponseDTOonSuccess,
+  RefreshJwtResponseDTOonFailure,
+} from "$lib/types/apiDTO/RefreshJwtResponseDTO";
+import { HttpStatus } from "$lib/types/HttpStatus";
 
-const FetchStore = {
-  token: "",
+const FetchStore: {
+  token: JwtDto;
+} = {
+  token: {
+    accessToken: "",
+    refreshToken: "",
+  },
 };
 
-function setToken(token: string) {
+function setToken(token: JwtDto) {
+  setCookie("refreshToken", token.refreshToken);
   FetchStore.token = token;
+}
+function getToken(): JwtDto {
+  return {
+    accessToken: FetchStore.token.accessToken,
+    refreshToken: FetchStore.token.refreshToken ?? getCookie("refreshToken"),
+  };
 }
 
 interface RequestOptions {
@@ -45,7 +64,24 @@ async function fetchWithErrorHandling(
         : {}),
     });
 
-    if (!response.ok) {
+    if (response.ok) return response;
+
+    // 토큰 만료시, 갱신 및 재호출
+    if (response.status === HttpStatus.FORBIDDEN) {
+      const refreshRes:
+        | RefreshJwtResponseDTOonSuccess
+        | RefreshJwtResponseDTOonFailure = refreshToken(
+        getToken().refreshToken,
+      ) as any;
+      if (refreshRes.isSuccess === false) {
+        const { message } = refreshRes as RefreshJwtResponseDTOonFailure;
+
+        throw new Error(message || `token refresh failed`);
+      }
+      const { jwtDto } = refreshRes as RefreshJwtResponseDTOonSuccess;
+      setToken(jwtDto);
+      return fetchWithErrorHandling(method, path, options);
+    } else {
       const errorData = await response.json().catch(() => ({}));
       throw new Error(
         errorData.message || `HTTP error! status: ${response.status}`,
@@ -56,6 +92,10 @@ async function fetchWithErrorHandling(
     console.error("Fetch error:", error);
     throw error;
   }
+}
+
+function refreshToken(refreshToken: string) {
+  return post("/open/auth/refresh", { body: { refreshToken } });
 }
 
 function get(path: string, options: RequestOptions = {}) {
@@ -88,4 +128,4 @@ async function getImage(imageId: string): Promise<Blob> {
   return fetchWithErrorHandling("GET", url, options).then((res) => res.blob());
 }
 
-export { get, post, put, del, getImage, setToken };
+export { buildQueryString, get, post, put, del, getImage, setToken };

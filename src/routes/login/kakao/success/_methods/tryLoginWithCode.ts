@@ -2,7 +2,7 @@ import { post } from "$lib/utils/FetchUtils";
 import {
   type LoginResponseDTOonFailure,
   type LoginResponseDTOonSuccess,
-} from "$lib/types/DTO/LoginResponseDTO";
+} from "$lib/types/apiDTO/LoginResponseDTO";
 
 export async function tryLoginWithCode(
   code: string,

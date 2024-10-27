@@ -1,30 +1,17 @@
 import { config } from "$lib/app.config";
-import type { JwtDto } from "$lib/types/JwtDto";
-import { getCookie, setCookie } from "$lib/utils/CookieUtils";
 import type {
   RefreshJwtResponseDTOonSuccess,
   RefreshJwtResponseDTOonFailure,
 } from "$lib/types/apiDTO/RefreshJwtResponseDTO";
 import { HttpStatus } from "$lib/types/HttpStatus";
 
-const FetchStore: {
-  token: JwtDto;
-} = {
-  token: {
-    accessToken: "",
-    refreshToken: "",
-  },
+const FetchStore = {
+  accessToken: "",
+  refreshToken: "",
 };
 
-function setToken(token: JwtDto) {
-  setCookie("refreshToken", token.refreshToken);
-  FetchStore.token = token;
-}
-function getToken(): JwtDto {
-  return {
-    accessToken: FetchStore.token.accessToken,
-    refreshToken: FetchStore.token.refreshToken ?? getCookie("refreshToken"),
-  };
+function setToken(newToken: { accessToken?: string; refreshToken?: string }) {
+  Object.assign(FetchStore, newToken);
 }
 
 interface RequestOptions {
@@ -51,7 +38,8 @@ async function fetchWithErrorHandling(
 
   const headers = {
     "Content-Type": options.contentType || "application/json",
-    Authorization: "Bearer " + FetchStore.token,
+    Authorization:
+      FetchStore.accessToken !== "" ? "Bearer " + FetchStore.accessToken : "",
     ...options.headers,
   };
 
@@ -71,15 +59,15 @@ async function fetchWithErrorHandling(
       const refreshRes:
         | RefreshJwtResponseDTOonSuccess
         | RefreshJwtResponseDTOonFailure = refreshToken(
-        getToken().refreshToken,
+        FetchStore.refreshToken,
       ) as any;
       if (refreshRes.isSuccess === false) {
         const { message } = refreshRes as RefreshJwtResponseDTOonFailure;
 
         throw new Error(message || `token refresh failed`);
       }
-      const { jwtDto } = refreshRes as RefreshJwtResponseDTOonSuccess;
-      setToken(jwtDto);
+      const { accessToken } = refreshRes as RefreshJwtResponseDTOonSuccess;
+      setToken({ accessToken });
       return fetchWithErrorHandling(method, path, options);
     } else {
       const errorData = await response.json().catch(() => ({}));
@@ -87,7 +75,6 @@ async function fetchWithErrorHandling(
         errorData.message || `HTTP error! status: ${response.status}`,
       );
     }
-    return response;
   } catch (error) {
     console.error("Fetch error:", error);
     throw error;

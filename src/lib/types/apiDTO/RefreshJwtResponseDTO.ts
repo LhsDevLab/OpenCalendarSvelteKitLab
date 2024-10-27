@@ -1,12 +1,10 @@
-import type { JwtDto } from "$lib/types/JwtDto";
-
 interface RefreshJwtResponseDTO {
   isSuccess: boolean;
 }
 
 export interface RefreshJwtResponseDTOonSuccess extends RefreshJwtResponseDTO {
   isSuccess: boolean;
-  jwtDto: JwtDto;
+  accessToken: string;
 }
 
 export interface RefreshJwtResponseDTOonFailure extends RefreshJwtResponseDTO {

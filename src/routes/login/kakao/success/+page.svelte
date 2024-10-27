@@ -1,10 +1,20 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import "$lib/app.css";
+  import { makeCookieString } from "$lib/utils/CookieUtils";
+  import { onMount } from "svelte";
 
   /** @type {import('./$types').PageData} */
   export let data;
 
-  let { error, errorDescription } = data;
+  let { error, errorDescription, refreshToken } = data;
+
+  onMount(() => {
+    if (error === null) {
+      document.cookie = makeCookieString("refreshToken", refreshToken);
+      goto("/app/main");
+    }
+  });
 </script>
 
 <svelte:head>

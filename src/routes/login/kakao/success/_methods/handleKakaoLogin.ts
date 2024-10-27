@@ -14,7 +14,10 @@ export async function handleKakaoLogin(kakaoCode: string) {
     const { accessToken, refreshToken } = res as LoginResponseDTOonSuccess;
     //로그인 성공 시, 토큰 획득
     setToken({ accessToken, refreshToken });
-    throw redirect(302, `/app/main`);
+    return {
+      error: null,
+      refreshToken: refreshToken,
+    };
   }
   const { code, payload } = res as LoginResponseDTOonFailure;
   //해당 카카오 회원이 없을시, 회원가입 시도

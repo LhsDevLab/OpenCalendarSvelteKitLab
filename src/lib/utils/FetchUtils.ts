@@ -55,7 +55,7 @@ async function fetchWithErrorHandling(
     if (response.ok) return response;
 
     // 토큰 만료시, 갱신 및 재호출
-    if (response.status === HttpStatus.FORBIDDEN) {
+    if (response.status === HttpStatus.UNAUTHORIZED) {
       const refreshRes:
         | RefreshJwtResponseDTOonSuccess
         | RefreshJwtResponseDTOonFailure = refreshToken(

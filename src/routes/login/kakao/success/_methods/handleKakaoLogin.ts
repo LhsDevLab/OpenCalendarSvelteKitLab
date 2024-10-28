@@ -13,7 +13,7 @@ export async function handleKakaoLogin(kakaoCode: string) {
   if (res.isSuccess) {
     const { accessToken, refreshToken } = res as LoginResponseDTOonSuccess;
     //로그인 성공 시, 토큰 획득
-    setToken({ accessToken, refreshToken });
+    await setToken({ accessToken, refreshToken });
     return {
       error: null,
       refreshToken: refreshToken,

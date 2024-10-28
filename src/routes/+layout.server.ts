@@ -1,7 +1,7 @@
 import { setToken } from "$lib/utils/FetchUtils";
-import type { PageServerLoad } from "./$types";
+import type { LayoutServerLoad } from "./$types";
 
-export const load: PageServerLoad = async ({ cookies }) => {
+export const load: LayoutServerLoad = async ({ cookies }) => {
   const refreshToken = cookies.get("refreshToken");
   setToken({ refreshToken });
 };

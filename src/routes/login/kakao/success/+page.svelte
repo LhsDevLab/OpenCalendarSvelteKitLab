@@ -1,19 +1,41 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import "$lib/app.css";
-  import { makeCookieString } from "$lib/utils/CookieUtils";
   import { onMount } from "svelte";
+  import { handleKakaoLogin } from "./_methods/handleKakaoLogin";
+  import { setCookie } from "$lib/utils/CookieUtils";
+  import { setToken } from "$lib/utils/FetchUtils";
 
   /** @type {import('./$types').PageData} */
   export let data;
 
-  let { error, errorDescription, refreshToken } = data;
+  let { code, error, error_description, state } = data;
 
-  onMount(() => {
-    if (error === null) {
-      document.cookie = makeCookieString("refreshToken", refreshToken);
+  onMount(async () => {
+    //1.에러 체크
+    if (error !== null || !code) return;
+
+    //2.state별 로직 처리
+    let res: any = await (async () => {
+      if ((state = "kakaoLogin")) {
+        return handleKakaoLogin(code);
+      } else {
+        return {
+          error: "state 미일치",
+          error_description: "전송 상태값 미일치",
+        };
+      }
+    })();
+
+    if (res.error === null) {
+      const { accessToken, refreshToken } = res;
+      setCookie("refreshToken", refreshToken);
+      setToken({ accessToken, refreshToken });
       goto("/app/main");
     }
+
+    error = res.error;
+    error_description = res.error_description;
   });
 </script>
 
@@ -26,7 +48,7 @@
 >
   {#if error !== null}
     <h1 class="text-4xl font-bold mb-6">로그인 실패!</h1>
-    <div>: {errorDescription}</div>
+    <div>: {error_description}</div>
     <button
       class="flex items-center justify-center w-full p-2 bg-gray-400 font-bold text-gray-800 rounded hover:bg-gray-500 hover:text-gray-100"
       on:click={() => {

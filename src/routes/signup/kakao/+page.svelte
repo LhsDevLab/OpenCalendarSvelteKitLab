@@ -8,9 +8,8 @@
   } from "$lib/types/apiDTO/SignUpResponseDTO";
   import { trySignup } from "./_methods/trySignup";
 
-  export let data: {
-    kakaoId: string;
-  };
+  /** @type {import('./$types').PageData} */
+  export let data;
 
   let { kakaoId } = data;
 

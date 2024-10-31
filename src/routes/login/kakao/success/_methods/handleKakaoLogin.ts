@@ -3,7 +3,7 @@ import {
   type LoginResponseDTOonFailure,
   type LoginResponseDTOonSuccess,
 } from "$lib/types/apiDTO/LoginResponseDTO";
-import { redirect } from "@sveltejs/kit";
+import { goto } from "$app/navigation";
 import { buildQueryString, setToken } from "$lib/utils/FetchUtils";
 
 export async function handleKakaoLogin(kakaoCode: string) {
@@ -22,10 +22,7 @@ export async function handleKakaoLogin(kakaoCode: string) {
   const { code, payload } = res as LoginResponseDTOonFailure;
   //해당 카카오 회원이 없을시, 회원가입 시도
   if (code === "NO_SUCH_USER") {
-    throw redirect(
-      302,
-      `/signup/kakao/${buildQueryString({ kakaoId: payload })}`,
-    );
+    goto(`/signup/kakao?${buildQueryString({ kakaoId: payload })}`);
   }
 
   return {

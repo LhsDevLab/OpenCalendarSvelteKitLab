@@ -26,7 +26,6 @@
         };
       }
     })();
-
     if (res.error === null) {
       const { accessToken, refreshToken } = res;
       setCookie("refreshToken", refreshToken);

@@ -1,9 +1,9 @@
 <script lang="ts">
   import "$lib/app.css";
   import { onMount } from "svelte";
-  import { ScreenInfoValue } from "$lib/stores/ScreenInfoStore";
+  import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
   import { config } from "$lib/app.config";
-  import { setToken } from "$lib/utils/FetchUtils";
+  import { setToken } from "$lib/stores/FetchStore";
   import { getCookie } from "$lib/utils/CookieUtils";
 
   function checkOrientation() {

@@ -1,7 +1,7 @@
 import {
   MainCalendarDateValue,
   MainCalendarDate,
-} from "$lib/stores/MainCalendarStore";
+} from "$lib/stores/writable/MainCalendarStore";
 
 export function nextMonth() {
   MainCalendarDateValue.update((date: MainCalendarDate) => {

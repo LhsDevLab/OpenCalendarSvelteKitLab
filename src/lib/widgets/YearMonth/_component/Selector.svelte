@@ -2,7 +2,7 @@
   import {
     MainCalendarDateValue,
     MainCalendarDate,
-  } from "$lib/stores/MainCalendarStore";
+  } from "$lib/stores/writable/MainCalendarStore";
 
   export let togglePopup: Function;
   let year: number;

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import "$lib/app.css"; // Ensure your app.css includes the Tailwind base styles
-  import { ScreenInfoValue } from "$lib/stores/ScreenInfoStore";
+  import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
   import type {
     SignUpResponseDTOonFailure,
     SignUpResponseDTOonSuccess,

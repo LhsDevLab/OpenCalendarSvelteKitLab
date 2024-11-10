@@ -2,8 +2,8 @@
   import {
     MainCalendarDateValue,
     MainCalendarDate,
-  } from "$lib/stores/MainCalendarStore";
-  import { ScreenInfoValue } from "$lib/stores/ScreenInfoStore";
+  } from "$lib/stores/writable/MainCalendarStore";
+  import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
   import Selector from "./_component/Selector.svelte";
 
   let isSmallHeight: boolean;

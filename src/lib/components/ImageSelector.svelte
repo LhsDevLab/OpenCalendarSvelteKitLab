@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from "svelte";
-  import { getImage } from "$lib/utils/FetchUtils";
+  import { getImage } from "$lib/utils/FetchUtils/FetchUtils";
 
   export let uploadedImageId: string = "default_profile";
   let selectedImage: string | null = null;

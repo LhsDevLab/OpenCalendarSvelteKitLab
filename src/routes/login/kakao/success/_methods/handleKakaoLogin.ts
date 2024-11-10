@@ -4,7 +4,7 @@ import {
   type LoginResponseDTOonSuccess,
 } from "$lib/types/apiDTO/LoginResponseDTO";
 import { goto } from "$app/navigation";
-import { buildQueryString, setToken } from "$lib/utils/FetchUtils";
+import { buildQueryString } from "$lib/utils/FetchUtils/FetchUtils";
 
 export async function handleKakaoLogin(kakaoCode: string) {
   const res: LoginResponseDTOonFailure | LoginResponseDTOonSuccess =

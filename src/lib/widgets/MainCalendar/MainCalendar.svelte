@@ -5,7 +5,7 @@
   import {
     MainCalendarDateValue,
     MainCalendarDate,
-  } from "$lib/stores/MainCalendarStore";
+  } from "$lib/stores/writable/MainCalendarStore";
   import { previousMonth } from "./_methods/previousMonth";
   import { nextMonth } from "./_methods/nextMonth";
 

@@ -1,4 +1,4 @@
-import { post } from "$lib/utils/FetchUtils";
+import { post } from "$lib/utils/FetchUtils/FetchUtils";
 import {
   type LoginResponseDTOonFailure,
   type LoginResponseDTOonSuccess,

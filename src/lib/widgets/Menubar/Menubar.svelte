@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { ScreenInfoValue } from "$lib/stores/ScreenInfoStore";
+  import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
   import ModuCalLogo from "./_components/ModuCalLogo.svelte";
 
   export let selected: string;

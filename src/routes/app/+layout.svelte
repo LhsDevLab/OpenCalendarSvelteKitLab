@@ -2,7 +2,7 @@
   import Footer from "./_components/Footer.svelte";
   import Menubar from "$lib/widgets/Menubar/Menubar.svelte";
   import "$lib/app.css";
-  import { ScreenInfoValue } from "$lib/stores/ScreenInfoStore";
+  import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
   import { goto } from "$app/navigation";
 
   let isLandscape: boolean;

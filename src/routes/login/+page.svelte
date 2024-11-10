@@ -1,7 +1,7 @@
 <script lang="ts">
   import "$lib/app.css"; // Ensure your app.css includes the Tailwind base styles
   import OauthLogin from "$lib/widgets/OauthLogin/OauthLogin.svelte";
-  import { ScreenInfoValue } from "$lib/stores/ScreenInfoStore";
+  import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
 
   let isSmallWidth: boolean;
 

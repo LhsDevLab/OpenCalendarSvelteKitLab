@@ -23,12 +23,7 @@ function del(path: string, options: RequestInfos = {}) {
 
 async function getImage(imageId: string): Promise<Blob> {
   const url = `app/image/get_image/${imageId}`;
-  const options: RequestInfos = {
-    headers: {
-      Accept: "image/*",
-    },
-  };
-  return fetchWithRefresh("GET", url, options).then((res) => res.blob());
+  return fetchWithRefresh("GET", url).then((res) => res.blob());
 }
 
 export { buildQueryString, get, post, put, del, getImage };

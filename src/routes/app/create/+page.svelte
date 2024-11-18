@@ -2,7 +2,6 @@
   import "$lib/app.css"; // Ensure your app.css includes the Tailwind base styles
   import ImageSelector from "$lib/components/ImageSelector.svelte";
   import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
-  import { getUser } from "./_method/temp";
 
   let isLandscape: boolean;
   let [profileImageId, calendarName, contents] = ["", "", ""];
@@ -32,12 +31,5 @@
       <div>contents</div>
       <input type="textarea" value={contents} />
     </form>
-    <button
-      on:click={() => {
-        getUser().then((res) => console.log(res.message));
-      }}
-    >
-      test
-    </button>
   </div>
 </section>

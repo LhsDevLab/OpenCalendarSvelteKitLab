@@ -1,5 +1,6 @@
 import { fetchWithRefresh } from "$lib/utils/FetchUtils/fetchWithRefresh";
 import type { RequestInfos } from "$lib/types/RequestInfos";
+import { ImageSize } from "$lib/types/ImageSize";
 
 function buildQueryString(query: Record<string, any>): string {
   return new URLSearchParams(query).toString();
@@ -21,8 +22,8 @@ function del(path: string, options: RequestInfos = {}) {
   return fetchWithRefresh("DELETE", path, options).then((res) => res.json());
 }
 
-async function getImage(imageId: string): Promise<Blob> {
-  const url = `app/image/get_image/${imageId}`;
+async function getImage(imageId: string, size: ImageSize): Promise<Blob> {
+  const url = `open/image/get_image/${imageId}/${size}`;
   return fetchWithRefresh("GET", url).then((res) => res.blob());
 }
 

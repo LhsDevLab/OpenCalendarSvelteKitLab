@@ -1,8 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from "svelte";
   import { getImage } from "$lib/utils/FetchUtils/FetchUtils";
+  import { ImageSize } from "$lib/types/ImageSize";
 
-  export let uploadedImageId: string = "default_profile";
+  export let uploadedImageId: string = "673b4162d59f7575a19e6f1a";
   let selectedImage: string | null = null;
   let uploadedImageUrl: string | null = null;
   const dispatch = createEventDispatcher();
@@ -22,7 +23,7 @@
 
   onMount(async () => {
     try {
-      const blob = await getImage(uploadedImageId);
+      const blob = await getImage(uploadedImageId, ImageSize.MEDIUM);
       uploadedImageUrl = URL.createObjectURL(blob);
     } catch (error) {
       console.error("Error loading image:", error);

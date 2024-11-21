@@ -3,7 +3,7 @@
   import { getImage } from "$lib/utils/FetchUtils/FetchUtils";
   import { ImageSize } from "$lib/types/ImageSize";
 
-  export let uploadedImageId: string = "673b4162d59f7575a19e6f1a";
+  export let uploadedImageId: string = "";
   let selectedImage: string | null = null;
   let uploadedImageUrl: string | null = null;
   const dispatch = createEventDispatcher();

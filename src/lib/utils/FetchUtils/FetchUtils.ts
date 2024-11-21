@@ -22,8 +22,14 @@ function del(path: string, options: RequestInfos = {}) {
   return fetchWithRefresh("DELETE", path, options).then((res) => res.json());
 }
 
-async function getImage(imageId: string, size: ImageSize): Promise<Blob> {
-  const url = `open/image/get_image/${imageId}/${size}`;
+async function getImage(
+  imageId: string,
+  size: ImageSize,
+  isPrivate: boolean = false,
+): Promise<Blob> {
+  const url = isPrivate
+    ? `app/image/get_image/${imageId}/${size}`
+    : `open/image/get_image/${imageId}/${size}`;
   return fetchWithRefresh("GET", url).then((res) => res.blob());
 }
 

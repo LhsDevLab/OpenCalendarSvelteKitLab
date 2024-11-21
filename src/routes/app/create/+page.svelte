@@ -25,7 +25,7 @@
   >
     <form>
       <div>profileImageId</div>
-      <ImageSelector uploadedImageId={"default_profile"} />
+      <ImageSelector uploadedImageId={"673b4162d59f7575a19e6f1a"} />
       <div>calendarName</div>
       <input value={calendarName} />
       <div>contents</div>

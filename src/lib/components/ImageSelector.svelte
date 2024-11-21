@@ -23,7 +23,7 @@
 
   onMount(async () => {
     try {
-      const blob = await getImage(uploadedImageId, ImageSize.MEDIUM);
+      const blob = await getImage(uploadedImageId, ImageSize.THUMBNAIL);
       uploadedImageUrl = URL.createObjectURL(blob);
     } catch (error) {
       console.error("Error loading image:", error);

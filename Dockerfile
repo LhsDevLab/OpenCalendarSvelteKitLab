@@ -1,4 +1,6 @@
-FROM node:21-alpine
+FROM node:23-alpine
+
+ARG API_SERVER_URL
 
 WORKDIR /app
 
@@ -8,9 +10,8 @@ RUN rm -rf package-lock.json
 RUN rm -rf node_modules
 RUN npm i
 
-
-## EXPOSE [Port you mentioned in the vite.config file]
+RUN VITE_API_URL=$API_SERVER_URL vite build
 
 EXPOSE 5173/tcp
 
-CMD ["npm", "run", "prod"]
+CMD ["PORT=5173", "node", "build"]

@@ -14,4 +14,4 @@ COPY . .
 
 EXPOSE 5173/tcp
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "prod"]

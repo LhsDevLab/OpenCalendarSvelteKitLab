@@ -10,10 +10,9 @@ RUN rm -rf package-lock.json
 RUN rm -rf node_modules
 RUN npm i
 
-RUN VITE_API_URL=$API_SERVER_URL > .env
+RUN echo "VITE_API_URL=$API_SERVER_URL" >> .env && \
+    echo "PORT=5173" >> .env
 
 RUN npm run build
 
-EXPOSE 5173/tcp
-
-CMD ["PORT=5173", "node", "build"]
+ENTRYPOINT ["sh", "-c", "PORT=5173 node build"]

@@ -4,9 +4,13 @@
     MainCalendarDate,
   } from "$lib/stores/writable/MainCalendarStore";
 
-  export let togglePopup: Function;
-  let year: number;
-  let month: number;
+  interface Props {
+    togglePopup: Function;
+  }
+
+  let { togglePopup }: Props = $props();
+  let year: number = $state();
+  let month: number = $state();
   let weekday: number;
 
   function updateDate(newYear: number, newMonth: number) {
@@ -46,9 +50,9 @@
       <select
         class="mr-2 p-2 border rounded w-full text-center"
         bind:value={year}
-        on:focus={handleFocus}
-        on:blur={handleBlur}
-        on:change={handleChange}
+        onfocus={handleFocus}
+        onblur={handleBlur}
+        onchange={handleChange}
       >
         {#each Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - 50 + i) as yearOption}
           <option value={yearOption} class="text-center">{yearOption}년</option>
@@ -58,9 +62,9 @@
       <select
         class="p-2 border rounded w-full text-center"
         bind:value={month}
-        on:focus={handleFocus}
-        on:blur={handleBlur}
-        on:change={handleChange}
+        onfocus={handleFocus}
+        onblur={handleBlur}
+        onchange={handleChange}
       >
         {#each Array.from({ length: 12 }, (_, i) => i) as monthOption}
           <option value={monthOption} class="text-center"
@@ -74,13 +78,13 @@
     <div class="flex justify-end">
       <button
         class="bg-blue-500 text-white px-4 py-2 rounded mr-2"
-        on:click={() => updateDate(year, month)}
+        onclick={() => updateDate(year, month)}
       >
         Apply
       </button>
       <button
         class="bg-gray-300 px-4 py-2 rounded"
-        on:click={() => togglePopup()}
+        onclick={() => togglePopup()}
       >
         Cancel
       </button>

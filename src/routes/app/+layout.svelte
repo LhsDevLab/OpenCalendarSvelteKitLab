@@ -4,8 +4,13 @@
   import "$lib/app.css";
   import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
   import { goto } from "$app/navigation";
+  interface Props {
+    children?: import('svelte').Snippet<[any]>;
+  }
 
-  let isLandscape: boolean;
+  let { children }: Props = $props();
+
+  let isLandscape: boolean = $state();
 
   ScreenInfoValue.subscribe((value) => {
     isLandscape = value.isLandscape;
@@ -24,7 +29,7 @@
   >
     <Menubar selected="main" on:menuSelect={handleMenuSelect} />
     <main class="flex flex-col flex-1">
-      <slot class="flex-1" />
+      {@render children?.({ class: "flex-1", })}
     </main>
   </div>
   <Footer />

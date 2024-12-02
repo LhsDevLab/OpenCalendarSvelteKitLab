@@ -3,7 +3,7 @@
   import MainCalendar from "$lib/widgets/MainCalendar/MainCalendar.svelte";
   import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
 
-  let isLandscape: boolean;
+  let isLandscape: boolean = $state();
 
   ScreenInfoValue.subscribe((value) => {
     isLandscape = value.isLandscape;

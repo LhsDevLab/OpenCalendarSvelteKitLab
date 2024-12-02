@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { preventDefault } from "svelte/legacy";
+
   import { goto } from "$app/navigation";
   import "$lib/app.css"; // Ensure your app.css includes the Tailwind base styles
   import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
@@ -8,14 +10,17 @@
   } from "$lib/types/apiDTO/SignUpResponseDTO";
   import { trySignup } from "./_methods/trySignup";
 
-  /** @type {import('./$types').PageData} */
-  export let data;
+  interface Props {
+    data: import("./$types").PageData;
+  }
+
+  let { data }: Props = $props();
 
   let { kakaoId } = data;
 
-  let isSmallWidth: boolean;
-  let message: string = "";
-  let nickname = "";
+  let isSmallWidth: boolean = $state();
+  let message: string = $state("");
+  let nickname = $state("");
 
   ScreenInfoValue.subscribe((value) => {
     isSmallWidth = value.isSmallWidth;
@@ -46,7 +51,7 @@
   <span class="text-sm font-bold mb-6" class:text-xl={!isSmallWidth}
     >{message}</span
   >
-  <form class="w-full" on:submit|preventDefault={handleSubmit}>
+  <form class="w-full" onsubmit={preventDefault(handleSubmit)}>
     <div class="mb-4">
       <input
         type="text"

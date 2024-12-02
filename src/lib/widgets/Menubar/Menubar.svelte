@@ -3,10 +3,14 @@
   import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
   import ModuCalLogo from "./_components/ModuCalLogo.svelte";
 
-  export let selected: string;
+  interface Props {
+    selected: string;
+  }
 
-  let isLandscape: boolean;
-  let isSmallWidth: boolean;
+  let { selected = $bindable() }: Props = $props();
+
+  let isLandscape: boolean = $state();
+  let isSmallWidth: boolean = $state();
   let isSmallHeight: boolean;
 
   ScreenInfoValue.subscribe((value) => {
@@ -40,7 +44,7 @@
             <button
               class="flex flex-row h-16 items-center justify-start hover:bg-gray-700 rounded p-2 w-full"
               class:bg-gray-500={selected === item.name}
-              on:click={() => handleMenuClick(item.name)}
+              onclick={() => handleMenuClick(item.name)}
             >
               <span class="text-2xl">{item.icon}</span>
               <span class="text-sm">{item.name}</span>
@@ -58,7 +62,7 @@
             <button
               class="flex flex-col h-16 items-center justify-start hover:bg-gray-700 rounded py-2 w-full"
               class:bg-gray-500={selected === item.name}
-              on:click={() => handleMenuClick(item.name)}
+              onclick={() => handleMenuClick(item.name)}
             >
               <span class="text-2xl">{item.icon}</span>
               <span class="text-sm">{item.name}</span>
@@ -77,7 +81,7 @@
           <button
             class="flex flex-col h-16 items-center justify-center hover:bg-gray-700 rounded px-2 w-full"
             class:bg-gray-500={selected === item.name}
-            on:click={() => handleMenuClick(item.name)}
+            onclick={() => handleMenuClick(item.name)}
           >
             <span class="text-xl">{item.icon}</span>
             <span class="text-xs">{item.name}</span>

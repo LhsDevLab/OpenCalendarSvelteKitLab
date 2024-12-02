@@ -5,6 +5,11 @@
   import { config } from "$lib/app.config";
   import { setToken } from "$lib/stores/FetchStore";
   import { getCookie } from "$lib/utils/CookieUtils";
+  interface Props {
+    children?: import('svelte').Snippet<[any]>;
+  }
+
+  let { children }: Props = $props();
 
   function checkOrientation() {
     ScreenInfoValue.set({
@@ -26,4 +31,4 @@
   });
 </script>
 
-<slot class="flex-1" />
+{@render children?.({ class: "flex-1", })}

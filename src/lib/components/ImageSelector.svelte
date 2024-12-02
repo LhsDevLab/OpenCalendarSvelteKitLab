@@ -3,9 +3,13 @@
   import { getImage } from "$lib/utils/FetchUtils/FetchUtils";
   import { ImageSize } from "$lib/types/ImageSize";
 
-  export let uploadedImageId: string = "";
-  let selectedImage: string | null = null;
-  let uploadedImageUrl: string | null = null;
+  interface Props {
+    uploadedImageId?: string;
+  }
+
+  let { uploadedImageId = "" }: Props = $props();
+  let selectedImage: string | null = $state(null);
+  let uploadedImageUrl: string | null = $state(null);
   const dispatch = createEventDispatcher();
 
   function handleFileSelect(event: Event) {
@@ -35,7 +39,7 @@
   <input
     type="file"
     accept="image/*"
-    on:change={handleFileSelect}
+    onchange={handleFileSelect}
     class="hidden"
     id="imageInput"
   />
@@ -55,7 +59,7 @@
         src={uploadedImageUrl}
         alt="로드된 이미지"
         class="max-w-full h-auto"
-        on:load={() => {
+        onload={() => {
           if (uploadedImageUrl) {
             URL.revokeObjectURL(uploadedImageUrl);
           }

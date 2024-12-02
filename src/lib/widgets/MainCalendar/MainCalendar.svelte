@@ -10,10 +10,10 @@
   import { nextMonth } from "./_methods/nextMonth";
 
   let currentDate: Date;
-  let currentMonth: number;
-  let currentYear: number;
-  let daysInMonth: number;
-  let firstDayOfMonth: number;
+  let currentMonth: number = $state();
+  let currentYear: number = $state();
+  let daysInMonth: number = $state();
+  let firstDayOfMonth: number = $state();
 
   onMount(() => {
     const unsubscribe = MainCalendarDateValue.subscribe(
@@ -29,19 +29,19 @@
     return unsubscribe;
   });
 
-  $: calendarDays = Array.from(
+  let calendarDays = $derived(Array.from(
     { length: daysInMonth },
     (_, i) => new Date(currentYear, currentMonth, i + 1),
-  );
+  ));
 </script>
 
 <div class="flex flex-col w-full h-full flex-1">
   <div class="flex justify-between items-center mb-4">
-    <button class="px-2 py-1 bg-gray-200 rounded" on:click={previousMonth}
+    <button class="px-2 py-1 bg-gray-200 rounded" onclick={previousMonth}
       >&lt;</button
     >
     <YearMonth />
-    <button class="px-2 py-1 bg-gray-200 rounded" on:click={nextMonth}
+    <button class="px-2 py-1 bg-gray-200 rounded" onclick={nextMonth}
       >&gt;</button
     >
   </div>

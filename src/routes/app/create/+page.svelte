@@ -3,7 +3,7 @@
   import ImageSelector from "$lib/components/ImageSelector.svelte";
   import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
 
-  let isLandscape: boolean;
+  let isLandscape: boolean = $state();
   let [profileImageId, calendarName, contents] = ["", "", ""];
 
   ScreenInfoValue.subscribe((value) => {

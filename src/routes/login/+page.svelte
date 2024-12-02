@@ -3,7 +3,7 @@
   import OauthLogin from "$lib/widgets/OauthLogin/OauthLogin.svelte";
   import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
 
-  let isSmallWidth: boolean;
+  let isSmallWidth: boolean = $state();
 
   ScreenInfoValue.subscribe((value) => {
     isSmallWidth = value.isSmallWidth;

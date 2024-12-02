@@ -21,7 +21,7 @@
   <!-- Kakao Button -->
   <button
     class="flex items-center justify-center w-full p-2 bg-yellow-400 font-bold text-gray-800 rounded hover:bg-yellow-500"
-    on:click={kakaoOnClick}
+    onclick={kakaoOnClick}
   >
     <span>카카오로 로그인</span>
   </button>

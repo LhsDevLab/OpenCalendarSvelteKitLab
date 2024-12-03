@@ -2,11 +2,11 @@
   import { onMount } from "svelte";
   import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
 
-  let isLandscape: boolean = $state();
-  let isSmallWidth: boolean = $state();
+  let isLandscape: boolean = $state() as boolean;
+  let isSmallWidth: boolean = $state() as boolean;
   let isSmallHeight: boolean;
-  let headerElement: HTMLElement = $state();
-  let myWidth: number = $state();
+  let headerElement: HTMLElement = $state() as HTMLElement;
+  let myWidth: number = $state() as number;
   let myHeight: number;
 
   ScreenInfoValue.subscribe((value) => {
@@ -29,9 +29,10 @@
     };
   });
 
-  let isSmall =
-    $derived((!isLandscape && (isSmallWidth || myWidth < 150)) ||
-    (isLandscape && isSmallWidth));
+  let isSmall = $derived(
+    (!isLandscape && (isSmallWidth || myWidth < 150)) ||
+      (isLandscape && isSmallWidth),
+  );
 </script>
 
 <div

@@ -18,7 +18,7 @@
 
   let { kakaoId } = data;
 
-  let isSmallWidth: boolean = $state();
+  let isSmallWidth: boolean = $state() as boolean;
   let message: string = $state("");
   let nickname = $state("");
 

@@ -10,7 +10,6 @@
   let { uploadedImageId = "" }: Props = $props();
   let selectedImage: string | null = $state(null);
   let uploadedImageUrl: string | null = $state(null);
-  const dispatch = createEventDispatcher();
 
   function handleFileSelect(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -19,7 +18,6 @@
       const reader = new FileReader();
       reader.onload = (e) => {
         selectedImage = e.target?.result as string;
-        dispatch("imageSelected", { image: selectedImage });
       };
       reader.readAsDataURL(file);
     }

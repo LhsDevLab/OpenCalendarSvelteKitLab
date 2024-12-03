@@ -10,15 +10,11 @@
 
   let { children }: Props = $props();
 
-  let isLandscape: boolean = $state();
+  let isLandscape: boolean = $state() as boolean;
 
   ScreenInfoValue.subscribe((value) => {
     isLandscape = value.isLandscape;
   });
-
-  function handleMenuSelect(event: any) {
-    goto("/app/" + event.detail);
-  }
 </script>
 
 <div class="flex flex-col min-h-screen">
@@ -27,7 +23,7 @@
     class:flex-row={isLandscape}
     class:flex-col={!isLandscape}
   >
-    <Menubar selected="main" on:menuSelect={handleMenuSelect} />
+    <Menubar selected="main" />
     <main class="flex flex-col flex-1">
       {@render children?.({ class: "flex-1", })}
     </main>

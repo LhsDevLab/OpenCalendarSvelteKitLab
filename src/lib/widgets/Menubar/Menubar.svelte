@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
   import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
   import ModuCalLogo from "./_components/ModuCalLogo.svelte";
+  import { goto } from "$app/navigation";
 
   interface Props {
     selected: string;
@@ -9,8 +9,8 @@
 
   let { selected = $bindable() }: Props = $props();
 
-  let isLandscape: boolean = $state();
-  let isSmallWidth: boolean = $state();
+  let isLandscape: boolean = $state() as boolean;
+  let isSmallWidth: boolean = $state() as boolean;
   let isSmallHeight: boolean;
 
   ScreenInfoValue.subscribe((value) => {
@@ -18,11 +18,10 @@
     isSmallWidth = value.isSmallWidth;
     isSmallHeight = value.isSmallHeight;
   });
-  const dispatch = createEventDispatcher();
 
   function handleMenuClick(menuItem: string) {
     selected = menuItem;
-    dispatch("menuSelect", menuItem);
+    goto("/app/" + selected);
   }
 
   const menuItems = [

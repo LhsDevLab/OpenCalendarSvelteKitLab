@@ -6,15 +6,15 @@
   import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
   import Selector from "./_component/Selector.svelte";
 
-  let isSmallHeight: boolean = $state();
+  let isSmallHeight: boolean = $state() as boolean;
   let showPopup = $state(false);
 
   ScreenInfoValue.subscribe((value) => {
     isSmallHeight = value.isSmallHeight;
   });
 
-  let year: number = $state();
-  let month: number = $state();
+  let year: number = $state() as number;
+  let month: number = $state() as number;
   let weekday: number;
 
   MainCalendarDateValue.subscribe((date: MainCalendarDate) => {

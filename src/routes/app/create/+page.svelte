@@ -1,9 +1,9 @@
 <script lang="ts">
   import "$lib/app.css"; // Ensure your app.css includes the Tailwind base styles
-  import ImageSelector from "$lib/components/ImageSelector.svelte";
-  import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
+  import ImageSelector from "$lib/4.widgets/ImageSelector.svelte";
+  import { ScreenInfoValue } from "$lib/6.shared/stores/writable/ScreenInfoStore";
 
-  let isLandscape: boolean = $state();
+  let isLandscape: boolean = $state() as boolean;
   let [profileImageId, calendarName, contents] = ["", "", ""];
 
   ScreenInfoValue.subscribe((value) => {

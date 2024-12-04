@@ -2,12 +2,12 @@ import { config } from "$lib/app.config";
 import type {
   RefreshJwtResponseDTOonSuccess,
   RefreshJwtResponseDTOonFailure,
-} from "$lib/types/apiDTO/RefreshJwtResponseDTO";
-import { HttpStatus } from "$lib/types/HttpStatus";
-import { FetchStore } from "$lib/stores/FetchStore";
-import type { RequestInfos } from "$lib/types/RequestInfos";
+} from "$lib/6.shared/types/apiDTO/RefreshJwtResponseDTO";
+import { HttpStatus } from "$lib/6.shared/types/HttpStatus";
+import { FetchStore } from "$lib/6.shared/stores/FetchStore";
+import type { RequestInfos } from "$lib/6.shared/types/RequestInfos";
 import { buildQueryString } from "./FetchUtils";
-import { setToken } from "$lib/stores/FetchStore";
+import { setToken } from "$lib/6.shared/stores/FetchStore";
 
 async function defaultFetch(
   method: "GET" | "POST" | "PUT" | "DELETE",

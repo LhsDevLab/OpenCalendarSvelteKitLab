@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { SelectedDateTime } from "$lib/stores/writable/EventsStore";
+  import { SelectedDateTime } from "$lib/6.shared/stores/writable/EventsStore";
 
   interface Props {
     day: Date;

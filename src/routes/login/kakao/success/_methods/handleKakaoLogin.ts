@@ -2,9 +2,9 @@ import { tryLoginWithCode } from "./tryLoginWithCode";
 import {
   type LoginResponseDTOonFailure,
   type LoginResponseDTOonSuccess,
-} from "$lib/types/apiDTO/LoginResponseDTO";
+} from "$lib/6.shared/types/apiDTO/LoginResponseDTO";
 import { goto } from "$app/navigation";
-import { buildQueryString } from "$lib/utils/FetchUtils/FetchUtils";
+import { buildQueryString } from "$lib/6.shared/utils/FetchUtils/FetchUtils";
 
 export async function handleKakaoLogin(kakaoCode: string) {
   const res: LoginResponseDTOonFailure | LoginResponseDTOonSuccess =

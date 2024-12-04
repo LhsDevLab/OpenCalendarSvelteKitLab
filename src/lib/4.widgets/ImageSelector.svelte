@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { createEventDispatcher, onMount } from "svelte";
-  import { getImage } from "$lib/utils/FetchUtils/FetchUtils";
-  import { ImageSize } from "$lib/types/ImageSize";
+  import { onMount } from "svelte";
+  import { getImage } from "$lib/6.shared/utils/FetchUtils/FetchUtils";
+  import { ImageSize } from "$lib/6.shared/types/ImageSize";
 
   interface Props {
     uploadedImageId?: string;

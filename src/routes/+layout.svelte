@@ -1,10 +1,10 @@
 <script lang="ts">
   import "$lib/app.css";
   import { onMount } from "svelte";
-  import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
+  import { ScreenInfoValue } from "$lib/6.shared/stores/writable/ScreenInfoStore";
   import { config } from "$lib/app.config";
-  import { setToken } from "$lib/stores/FetchStore";
-  import { getCookie } from "$lib/utils/CookieUtils";
+  import { setToken } from "$lib/6.shared/stores/FetchStore";
+  import { getCookie } from "$lib/6.shared/utils/CookieUtils";
   interface Props {
     children?: import('svelte').Snippet<[any]>;
   }

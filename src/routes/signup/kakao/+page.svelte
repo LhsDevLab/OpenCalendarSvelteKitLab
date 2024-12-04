@@ -3,11 +3,11 @@
 
   import { goto } from "$app/navigation";
   import "$lib/app.css"; // Ensure your app.css includes the Tailwind base styles
-  import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
+  import { ScreenInfoValue } from "$lib/6.shared/stores/writable/ScreenInfoStore";
   import type {
     SignUpResponseDTOonFailure,
     SignUpResponseDTOonSuccess,
-  } from "$lib/types/apiDTO/SignUpResponseDTO";
+  } from "$lib/6.shared/types/apiDTO/SignUpResponseDTO";
   import { trySignup } from "./_methods/trySignup";
 
   interface Props {

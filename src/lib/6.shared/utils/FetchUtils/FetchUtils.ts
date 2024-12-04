@@ -1,6 +1,6 @@
-import { fetchWithRefresh } from "$lib/utils/FetchUtils/fetchWithRefresh";
-import type { RequestInfos } from "$lib/types/RequestInfos";
-import { ImageSize } from "$lib/types/ImageSize";
+import { fetchWithRefresh } from "$lib/6.shared/utils/FetchUtils/fetchWithRefresh";
+import type { RequestInfos } from "$lib/6.shared/types/RequestInfos";
+import { ImageSize } from "$lib/6.shared/types/ImageSize";
 
 function buildQueryString(query: Record<string, any>): string {
   return new URLSearchParams(query).toString();

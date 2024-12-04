@@ -2,15 +2,15 @@
   import {
     MainCalendarDateValue,
     MainCalendarDate,
-  } from "$lib/stores/writable/MainCalendarStore";
+  } from "$lib/6.shared/stores/writable/MainCalendarStore";
 
   interface Props {
     togglePopup: Function;
   }
 
   let { togglePopup }: Props = $props();
-  let year: number = $state();
-  let month: number = $state();
+  let year: number = $state() as number;
+  let month: number = $state() as number;
   let weekday: number;
 
   function updateDate(newYear: number, newMonth: number) {

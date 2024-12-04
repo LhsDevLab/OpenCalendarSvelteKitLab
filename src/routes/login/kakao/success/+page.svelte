@@ -7,8 +7,8 @@
   import "$lib/app.css";
   import { onMount } from "svelte";
   import { handleKakaoLogin } from "./_methods/handleKakaoLogin";
-  import { setCookie } from "$lib/utils/CookieUtils";
-  import { setToken } from "$lib/stores/FetchStore";
+  import { setCookie } from "$lib/6.shared/utils/CookieUtils";
+  import { setToken } from "$lib/6.shared/stores/FetchStore";
 
   /** @type {import('./$types').PageData} */
   export let data;

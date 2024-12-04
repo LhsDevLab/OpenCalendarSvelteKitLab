@@ -1,11 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import YearMonth from "$lib/widgets/YearMonth/YearMonth.svelte";
+  import YearMonth from "$lib/4.widgets/YearMonth/YearMonth.svelte";
   import DayElement from "./_components/DayElement.svelte";
   import {
     MainCalendarDateValue,
     MainCalendarDate,
-  } from "$lib/stores/writable/MainCalendarStore";
+  } from "$lib/6.shared/stores/writable/MainCalendarStore";
   import { previousMonth } from "./_methods/previousMonth";
   import { nextMonth } from "./_methods/nextMonth";
 

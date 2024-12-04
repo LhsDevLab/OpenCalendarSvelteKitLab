@@ -1,8 +1,8 @@
-import { post } from "$lib/utils/FetchUtils/FetchUtils";
+import { post } from "$lib/6.shared/utils/FetchUtils/FetchUtils";
 import {
   type LoginResponseDTOonFailure,
   type LoginResponseDTOonSuccess,
-} from "$lib/types/apiDTO/LoginResponseDTO";
+} from "$lib/6.shared/types/apiDTO/LoginResponseDTO";
 
 export async function tryLoginWithCode(
   code: string,

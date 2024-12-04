@@ -1,8 +1,8 @@
-import { post } from "$lib/utils/FetchUtils/FetchUtils";
+import { post } from "$lib/6.shared/utils/FetchUtils/FetchUtils";
 import {
   type SignUpResponseDTOonFailure,
   type SignUpResponseDTOonSuccess,
-} from "$lib/types/apiDTO/SignUpResponseDTO";
+} from "$lib/6.shared/types/apiDTO/SignUpResponseDTO";
 
 export async function trySignup(
   kakaoId: string,

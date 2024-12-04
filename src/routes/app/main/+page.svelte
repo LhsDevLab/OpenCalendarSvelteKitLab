@@ -1,7 +1,7 @@
 <script lang="ts">
   import "$lib/app.css"; // Ensure your app.css includes the Tailwind base styles
-  import MainCalendar from "$lib/widgets/MainCalendar/MainCalendar.svelte";
-  import { ScreenInfoValue } from "$lib/stores/writable/ScreenInfoStore";
+  import MainCalendar from "$lib/4.widgets/MainCalendar/MainCalendar.svelte";
+  import { ScreenInfoValue } from "$lib/6.shared/stores/writable/ScreenInfoStore";
 
   let isLandscape: boolean = $state() as boolean;
 

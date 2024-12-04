@@ -1,4 +1,4 @@
-import { get } from "$lib/utils/FetchUtils/FetchUtils";
+import { get } from "$lib/6.shared/utils/FetchUtils/FetchUtils";
 
 export function kakaoOnClick() {
   get("open/kakao/url", {

@@ -1,7 +1,7 @@
 <script lang="ts">
   import "$lib/app.css"; // Ensure your app.css includes the Tailwind base styles
-  import ImageSelector from "$lib/4.widgets/ImageSelector.svelte";
   import { ScreenInfoValue } from "$lib/6.shared/stores/writable/ScreenInfoStore";
+  import CreateCalendar from "$lib/4.widgets/CreateCalendar/CreateCalendar.svelte";
 
   let isLandscape: boolean = $state() as boolean;
   let [profileImageId, calendarName, contents] = ["", "", ""];
@@ -20,16 +20,5 @@
   class:flex-row={isLandscape}
   class:flex-col={!isLandscape}
 >
-  <div
-    class="flex flex-col w-full h-full items-center justify-center basis-0 grow shrink bg-orange-100"
-  >
-    <form>
-      <div>profileImageId</div>
-      <ImageSelector uploadedImageId={"6742d32f80da4c1abf252dde"} />
-      <div>calendarName</div>
-      <input value={calendarName} />
-      <div>contents</div>
-      <input type="textarea" value={contents} />
-    </form>
-  </div>
+  <CreateCalendar />
 </section>

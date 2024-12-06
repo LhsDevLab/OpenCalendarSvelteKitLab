@@ -22,6 +22,7 @@ async function defaultFetch(
 
   const headers = {
     "Content-Type": options.contentType || "application/json",
+    "Api-Version": config["Api-Version"],
     Authorization:
       FetchStore.accessToken !== "" ? "Bearer " + FetchStore.accessToken : "",
     ...options.headers,

@@ -4,11 +4,21 @@
   import { ImageSize } from "$lib/6.shared/types/ImageSize";
 
   interface Props {
-    uploadedImageId?: string;
+    id?: string;
+    defaultImageId?: string;
+    width?: number;
+    height?: number;
+    selectedImage: string | null;
   }
 
-  let { uploadedImageId = "" }: Props = $props();
-  let selectedImage: string | null = $state(null);
+  let {
+    id,
+    defaultImageId = "6752a772a346db3c5b044dd2",
+    width = 300,
+    height = 300,
+    selectedImage = $bindable(null),
+  }: Props = $props();
+
   let uploadedImageUrl: string | null = $state(null);
 
   function handleFileSelect(event: Event) {
@@ -25,7 +35,7 @@
 
   onMount(async () => {
     try {
-      const blob = await getImage(uploadedImageId, ImageSize.THUMBNAIL);
+      const blob = await getImage(defaultImageId, ImageSize.THUMBNAIL);
       uploadedImageUrl = URL.createObjectURL(blob);
     } catch (error) {
       console.error("Error loading image:", error);
@@ -39,7 +49,7 @@
     accept="image/*"
     onchange={handleFileSelect}
     class="hidden"
-    id="imageInput"
+    {id}
   />
   <label
     for="imageInput"

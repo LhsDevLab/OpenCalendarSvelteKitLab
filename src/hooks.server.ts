@@ -1,7 +1,16 @@
-import { redirect } from "@sveltejs/kit";
+import { redirect, type HandleServerError } from "@sveltejs/kit";
+export const handleError: HandleServerError = ({
+  error,
+  event,
+  status,
+  message,
+}) => {
+  const errorRes = {
+    status,
+    message,
+  };
 
-export const handleError = ({ error, event }) => {
-  console.error("An error occurred:", error);
+  console.error(errorRes);
 
-  throw redirect(302, "/login");
+  return errorRes;
 };

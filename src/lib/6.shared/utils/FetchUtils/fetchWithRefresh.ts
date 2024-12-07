@@ -60,15 +60,28 @@ export async function fetchWithRefresh(
   path: string,
   options: RequestInfos = {},
 ): Promise<Response> {
-  const res = await defaultFetch(method, path, options);
+  try {
+    let res = await defaultFetch(method, path, options);
 
-  if (res.ok) return res;
-  else if (res.status === HttpStatus.UNAUTHORIZED) {
-    const newToken: string = await refreshToken(FetchStore.refreshToken);
-    setToken({ accessToken: newToken });
-    return defaultFetch(method, path, options);
-  } else {
+    if (res.ok) return res;
+
+    if (res.status === HttpStatus.UNAUTHORIZED) {
+      const newToken: string = await refreshToken(FetchStore.refreshToken);
+      setToken({ accessToken: newToken });
+      res = await defaultFetch(method, path, options);
+
+      if (res.ok) return res;
+    }
+
     const errorData = await res.json().catch(() => ({}));
     throw new Error(errorData.message || `HTTP error! status: ${res.status}`);
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error occurred";
+    return new Response(JSON.stringify({ message: errorMessage }), {
+      status: HttpStatus.INTERNAL_SERVER_ERROR,
+      statusText: "Internal Server Error",
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }

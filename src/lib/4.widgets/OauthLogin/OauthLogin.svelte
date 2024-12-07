@@ -1,6 +1,6 @@
 <script>
   import "$lib/app.css"; // Ensure your app.css includes the Tailwind base styles
-  import { kakaoOnClick } from "./kakaoOnClick";
+  import { kakaoOnClick } from "./_method/kakaoOnClick";
 </script>
 
 <div class="oauth-buttons flex flex-col space-y-2 w-full">

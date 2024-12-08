@@ -9,7 +9,7 @@ export const handleError: HandleClientError = ({
     status,
     message,
   };
-
+  console.log("test");
   console.error(errorRes);
 
   return errorRes;

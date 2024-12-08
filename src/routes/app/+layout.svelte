@@ -1,9 +1,8 @@
 <script lang="ts">
-  import Footer from "./_components/Footer.svelte";
+  import Footer from "../../lib/4.widgets/Footer.svelte";
   import Menubar from "$lib/4.widgets/Menubar/Menubar.svelte";
   import "$lib/app.css";
   import { ScreenInfoValue } from "$lib/6.shared/stores/writable/ScreenInfoStore";
-  import { goto } from "$app/navigation";
   interface Props {
     children?: import('svelte').Snippet<[any]>;
   }

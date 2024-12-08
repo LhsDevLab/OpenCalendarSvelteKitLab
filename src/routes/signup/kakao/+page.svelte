@@ -51,7 +51,7 @@
   <span class="text-sm font-bold mb-6" class:text-xl={!isSmallWidth}
     >{message}</span
   >
-  <form class="w-full" onsubmit={preventDefault(handleSubmit)}>
+  <form class="w-full" onsubmit={handleSubmit}>
     <div class="mb-4">
       <input
         type="text"

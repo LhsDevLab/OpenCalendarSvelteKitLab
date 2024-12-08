@@ -1,29 +1,59 @@
 <script lang="ts">
-  import "$lib/app.css"; // Ensure your app.css includes the Tailwind base styles
+  import "$lib/app.css";
   import ImageSelector from "$lib/5.features/ImageSelector/ImageSelector.svelte";
   import { ScreenInfoValue } from "$lib/6.shared/stores/writable/ScreenInfoStore";
-  import { config } from "$lib/app.config";
+  import { createCalendar } from "./_methods/createCalendar";
+  import type { CreateCalenderResponseDTOonFailure } from "$lib/6.shared/types/apiDTO/CreateCalenderResponseDTO";
 
   let isLandscape: boolean = $state() as boolean;
   let [selectedImage, calendarName, contents] = ["", "", ""];
+
+  async function onSubmit(event: SubmitEvent) {
+    event.preventDefault();
+
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    const res = await createCalendar(formData);
+
+    if (res.isSuccess === true) {
+      alert("캘린더 생성 성공");
+    } else {
+      console.log(res);
+      alert((res as CreateCalenderResponseDTOonFailure).message);
+    }
+  }
 
   ScreenInfoValue.subscribe((value) => {
     isLandscape = value.isLandscape;
   });
 </script>
 
-<div
+<form
+  onsubmit={onSubmit}
+  enctype="multipart/form-data"
   class="flex flex-col w-full h-full items-center justify-center basis-0 grow shrink bg-orange-100"
 >
-  <form
-    method="POST"
-    action={`${config}/app/calendar/create`}
-    enctype="multipart/form-data"
-  >
-    <ImageSelector id="ProfileImage" width={100} height={100} {selectedImage} />
-    <div>calendarName</div>
-    <input value={calendarName} />
-    <div>contents</div>
-    <input type="textarea" value={contents} />
-  </form>
-</div>
+  <h1>CALENDAR CREATE</h1>
+  <div class="flex flex-row items-center justify-center basis-0 shrink">
+    <div class="mx-2">
+      <ImageSelector
+        id="ProfileImage"
+        width={150}
+        height={150}
+        {selectedImage}
+      />
+    </div>
+    <div>
+      <div>calendarName</div>
+      <input type="text" value={calendarName} />
+      <div>contents</div>
+      <input type="textarea" value={contents} />
+    </div>
+  </div>
+  <input
+    type="submit"
+    value="CREATE"
+    class="cursor-pointer bg-blue-500 hover:bg-blue-600 w-60 text-white font-bold py-1 rounded my-1"
+  />
+</form>

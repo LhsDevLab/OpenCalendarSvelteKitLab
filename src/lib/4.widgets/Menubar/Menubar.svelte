@@ -1,6 +1,6 @@
 <script lang="ts">
   import { ScreenInfoValue } from "$lib/6.shared/stores/writable/ScreenInfoStore";
-  import ModuCalLogo from "./_components/ModuCalLogo.svelte";
+  import ModuCalLogo from "$lib/4.widgets/ModuCalLogo.svelte";
   import { goto } from "$app/navigation";
 
   interface Props {

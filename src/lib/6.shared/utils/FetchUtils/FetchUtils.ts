@@ -6,20 +6,24 @@ function buildQueryString(query: Record<string, any>): string {
   return new URLSearchParams(query).toString();
 }
 
-function get(path: string, options: RequestInfos = {}) {
-  return fetchWithRefresh("GET", path, options).then((res) => res.json());
+async function get(path: string, options: RequestInfos = {}) {
+  const res = await fetchWithRefresh("GET", path, options);
+  return res.json();
 }
 
-function post(path: string, options: RequestInfos = {}) {
-  return fetchWithRefresh("POST", path, options).then((res) => res.json());
+async function post(path: string, options: RequestInfos = {}) {
+  const res = await fetchWithRefresh("POST", path, options);
+  return res.json();
 }
 
-function put(path: string, options: RequestInfos = {}) {
-  return fetchWithRefresh("PUT", path, options).then((res) => res.json());
+async function put(path: string, options: RequestInfos = {}) {
+  const res = await fetchWithRefresh("PUT", path, options);
+  return res.json();
 }
 
-function del(path: string, options: RequestInfos = {}) {
-  return fetchWithRefresh("DELETE", path, options).then((res) => res.json());
+async function del(path: string, options: RequestInfos = {}) {
+  const res = await fetchWithRefresh("DELETE", path, options);
+  return res.json();
 }
 
 async function getImage(

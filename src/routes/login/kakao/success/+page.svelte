@@ -6,14 +6,12 @@
   import { goto } from "$app/navigation";
   import "$lib/app.css";
   import { onMount } from "svelte";
+  import { page } from "$app/stores";
   import { handleKakaoLogin } from "./_methods/handleKakaoLogin";
   import { setCookie } from "$lib/6.shared/utils/CookieUtils";
   import { setToken } from "$lib/6.shared/stores/FetchStore";
 
-  /** @type {import('./$types').PageData} */
-  export let data;
-
-  let { code, error, error_description, state } = data;
+  let { code, error, error_description, state } = $page.data;
 
   onMount(async () => {
     //1.에러 체크

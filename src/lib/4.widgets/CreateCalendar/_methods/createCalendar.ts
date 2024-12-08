@@ -15,11 +15,12 @@ export async function createCalendar(
   CreateCalenderResponseDTOonSuccess | CreateCalenderResponseDTOonFailure
 > {
   try {
+    formData.entries().forEach((e) => console.log(e));
     return await post("app/calendar/create", {
       body: formData,
     });
   } catch (e) {
-    goto(`/error/${ClientErrorCode.FetchError}`);
+    alert("캘린더 생성 실패");
     throw Error(ClientErrorCodeMap[ClientErrorCode.FetchError]);
   }
 }

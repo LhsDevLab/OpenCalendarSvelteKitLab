@@ -19,7 +19,6 @@
     if (res.isSuccess === true) {
       alert("캘린더 생성 성공");
     } else {
-      console.log(res);
       alert((res as CreateCalenderResponseDTOonFailure).message);
     }
   }
@@ -39,6 +38,7 @@
     <div class="mx-2">
       <ImageSelector
         id="ProfileImage"
+        name="ProfileImage"
         width={150}
         height={150}
         {selectedImage}
@@ -46,9 +46,9 @@
     </div>
     <div>
       <div>calendarName</div>
-      <input type="text" value={calendarName} />
+      <input type="text" name="calendarName" value={calendarName} />
       <div>contents</div>
-      <input type="textarea" value={contents} />
+      <input type="textarea" name="contents" value={contents} />
     </div>
   </div>
   <input

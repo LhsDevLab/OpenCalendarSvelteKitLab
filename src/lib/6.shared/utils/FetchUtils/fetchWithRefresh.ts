@@ -8,6 +8,7 @@ import { FetchStore } from "$lib/6.shared/stores/FetchStore";
 import type { RequestInfos } from "$lib/6.shared/types/RequestInfos";
 import { buildQueryString } from "./FetchUtils";
 import { setToken } from "$lib/6.shared/stores/FetchStore";
+import { TokenRefreshError, FetchError } from "$lib/6.shared/types/Errors";
 
 async function defaultFetch(
   method: "GET" | "POST" | "PUT" | "DELETE",
@@ -20,13 +21,16 @@ async function defaultFetch(
     url.search = buildQueryString(options.query);
   }
 
-  const headers = {
-    "Content-Type": options.contentType || "application/json",
+  const headers: HeadersInit = {
     "Api-Version": config["Api-Version"],
     Authorization:
       FetchStore.accessToken !== "" ? "Bearer " + FetchStore.accessToken : "",
     ...options.headers,
   };
+
+  if (options.contentType !== false) {
+    headers["Content-Type"] = options.contentType || "application/json";
+  }
 
   return fetch(url.toString(), {
     method: method,
@@ -38,21 +42,26 @@ async function defaultFetch(
 }
 
 async function refreshToken(refreshToken: string): Promise<string> {
-  let res: any = await defaultFetch("POST", "open/auth/refresh", {
-    body: { refreshToken },
-  });
+  try {
+    let res: any = await defaultFetch("POST", "open/auth/refresh", {
+      body: { refreshToken },
+    });
 
-  if (!res.ok) throw new Error(`Failed to refresh token, Failed to send`);
+    if (!res.ok) throw new Error(`Failed to refresh token, Failed to send`);
 
-  res = await res.json();
+    res = await res.json();
 
-  if (res.isSuccess === true) {
-    const { accessToken } = res as RefreshJwtResponseDTOonSuccess;
-    return accessToken;
-  } else if (res.isSuccess === true) {
-    const { message } = res as RefreshJwtResponseDTOonFailure;
-    throw new Error(`Failed to refresh token, ${message}`);
-  } else throw new Error(`Failed to refresh token, Unknown Error`);
+    if (res.isSuccess === true) {
+      const { accessToken } = res as RefreshJwtResponseDTOonSuccess;
+      return accessToken;
+    } else if (res.isSuccess !== true) {
+      const { message } = res as RefreshJwtResponseDTOonFailure;
+      throw new TokenRefreshError(`Failed to refresh token, ${message}`);
+    } else
+      throw new TokenRefreshError(`Failed to refresh token, Unknown Error`);
+  } catch (e) {
+    throw new TokenRefreshError(`Failed to refresh token, Unknown Error`);
+  }
 }
 
 export async function fetchWithRefresh(
@@ -69,7 +78,7 @@ export async function fetchWithRefresh(
   }
 
   if (res.ok === false) {
-    throw new Error(`Failed to fetch`);
+    throw new FetchError(`Failed to fetch`);
   }
 
   return res;

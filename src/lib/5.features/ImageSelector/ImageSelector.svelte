@@ -5,7 +5,8 @@
   import { config } from "$lib/app.config";
 
   interface Props {
-    id?: string;
+    id: string;
+    name: string;
     defaultImageId?: string;
     width?: number;
     height?: number;
@@ -14,6 +15,7 @@
 
   let {
     id,
+    name,
     defaultImageId = config.defaultImageId,
     width = 300,
     height = 300,
@@ -86,6 +88,7 @@
     onchange={handleFileSelect}
     class="hidden"
     {id}
+    {name}
   />
   <label
     for={id}

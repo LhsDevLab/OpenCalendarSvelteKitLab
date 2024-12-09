@@ -15,7 +15,6 @@ export async function createCalendar(
   CreateCalenderResponseDTOonSuccess | CreateCalenderResponseDTOonFailure
 > {
   try {
-    formData.entries().forEach((e) => console.log(e));
     return await post("app/calendar/create", {
       body: formData,
     });

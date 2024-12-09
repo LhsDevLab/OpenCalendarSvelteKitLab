@@ -8,6 +8,8 @@
   let isLandscape: boolean = $state() as boolean;
   let [selectedImage, calendarName, contents] = ["", "", ""];
 
+  let imageSelector: any;
+
   async function onSubmit(event: SubmitEvent) {
     event.preventDefault();
 
@@ -18,6 +20,8 @@
 
     if (res.isSuccess === true) {
       alert("캘린더 생성 성공");
+      form.reset();
+      imageSelector.reset();
     } else {
       alert((res as CreateCalenderResponseDTOonFailure).message);
     }
@@ -41,6 +45,7 @@
         name="ProfileImage"
         width={150}
         height={150}
+        bind:this={imageSelector}
         {selectedImage}
       />
     </div>

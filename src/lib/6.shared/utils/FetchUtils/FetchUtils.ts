@@ -51,11 +51,13 @@ async function getImage(
   imageId: string,
   size: ImageSize,
   isPrivate: boolean = false,
-): Promise<Blob> {
+): Promise<string> {
   const url = isPrivate
     ? `app/image/get_image/${imageId}/${size}`
     : `open/image/get_image/${imageId}/${size}`;
-  return fetchWithRefresh("GET", url).then((res) => res.blob());
+  const res = await fetchWithRefresh("GET", url);
+
+  return await URL.createObjectURL(await res.blob());
 }
 
 export { buildQueryString, get, post, put, del, getImage };

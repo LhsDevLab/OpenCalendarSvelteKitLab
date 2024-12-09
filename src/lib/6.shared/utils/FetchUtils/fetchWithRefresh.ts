@@ -28,15 +28,24 @@ async function defaultFetch(
     ...options.headers,
   };
 
-  if (options.contentType !== false) {
-    headers["Content-Type"] = options.contentType || "application/json";
+  if (
+    options.contentType === undefined &&
+    ["GET", "DELETE"].includes(method) === false &&
+    options.body instanceof FormData === false
+  ) {
+    headers["Content-Type"] = "application/json";
   }
 
   return fetch(url.toString(), {
     method: method,
     headers: headers,
-    ...(method !== "GET" && method !== "DELETE"
-      ? { body: JSON.stringify(options.body || {}) }
+    ...(["GET", "DELETE"].includes(method) === false
+      ? {
+          body:
+            options.body instanceof FormData
+              ? options.body
+              : JSON.stringify(options.body),
+        }
       : {}),
   });
 }

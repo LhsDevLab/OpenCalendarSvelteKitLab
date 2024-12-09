@@ -22,7 +22,17 @@
     selectedImage = $bindable(null),
   }: Props = $props();
 
+  export function reset() {
+    selectedImage = null;
+
+    if (fileInputElement) {
+      fileInputElement.value = "";
+    }
+    console.log(loadedImageUrl);
+  }
+
   let loadedImageUrl: string | null = $state(null);
+  let fileInputElement: HTMLInputElement;
 
   function handleFileSelect(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -38,8 +48,7 @@
 
   onMount(async () => {
     try {
-      const blob = await getImage(defaultImageId, ImageSize.THUMBNAIL);
-      loadedImageUrl = URL.createObjectURL(blob);
+      loadedImageUrl = await getImage(defaultImageId, ImageSize.THUMBNAIL);
     } catch (error) {
       console.error("Error loading image:", error);
     }
@@ -65,11 +74,6 @@
         alt="로드된 이미지"
         class="max-w-full h-auto"
         style={`width: ${width}px; height: ${height}px; object-fit: cover;`}
-        onload={() => {
-          if (loadedImageUrl) {
-            URL.revokeObjectURL(loadedImageUrl);
-          }
-        }}
       />
     </div>
   {:else}
@@ -86,6 +90,7 @@
     type="file"
     accept="image/*"
     onchange={handleFileSelect}
+    bind:this={fileInputElement}
     class="hidden"
     {id}
     {name}

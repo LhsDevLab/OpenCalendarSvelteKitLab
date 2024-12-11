@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head>
-  <title>Settings</title>
+  <title>Search</title>
 </svelte:head>
 
 <section

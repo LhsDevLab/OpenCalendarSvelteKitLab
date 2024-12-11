@@ -26,6 +26,7 @@
 
   const menuItems = [
     { name: "main", icon: "" },
+    { name: "search", icon: "" },
     { name: "create", icon: "" },
     { name: "settings", icon: "" },
   ];

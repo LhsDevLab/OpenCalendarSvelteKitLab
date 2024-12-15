@@ -1,7 +1,7 @@
 export const config = {
   apiUrl: import.meta.env.VITE_API_URL || "http://localhost:8080",
   "Api-Version": "*.*.*",
-  defaultImageId: "6752a756a346db3c5b044dd1",
+  defaultImageId: "673b4162d59f7575a19e6f1a",
   cookieDefaultOptions: {
     path: "/",
     httpOnly: true, // Cookie can only be accessed via HTTP(S), not JavaScript
